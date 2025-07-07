@@ -1,11 +1,16 @@
 <script setup lang="ts">
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 async function handleSubmit(e: Event) {
   e.preventDefault();
+
+  router.push({ name: "dashboard" });
 }
 </script>
 
 <template>
-  <main class="form-signin w-100 m-auto">
+  <main class="form-signin w-100 m-auto mt-auto">
     <form @submit="handleSubmit">
       <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
@@ -36,5 +41,7 @@ async function handleSubmit(e: Event) {
 .form-signin {
   max-width: 330px;
   padding: 1rem;
+  top: 255px;
+  position: relative;
 }
 </style>
