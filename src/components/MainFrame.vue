@@ -5,15 +5,16 @@ import OffcanvasView from "./OffcanvasView.vue";
 
 const StyledFrame = styled.div`
   position: fixed;
-  top: 85px;
-  left: 50px;
+  top: 56px;
+
+  display: flex;
 `;
 </script>
 
 <template>
   <NavbarView />
   <OffcanvasView />
-  <StyledFrame>
+  <StyledFrame class="container-fluid">
     <slot></slot>
   </StyledFrame>
 </template>

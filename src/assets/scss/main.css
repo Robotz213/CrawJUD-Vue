@@ -8,25 +8,31 @@ body {
   padding-bottom: 1.5rem !important;
 }
 
-#app {
+.form-signin {
   margin: auto !important;
-  max-width: 330px;
   padding: 1rem;
+  max-width: 330px;
   width: 100% !important;
 }
 
-#app .form-floating:focus-within {
+.form-signin .form-floating:focus-within {
   z-index: 2;
 }
 
-#app input[type="email"] {
+.form-signin input[type=email] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-#app input[type="password"] {
+.form-signin input[type=password] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-} /*# sourceMappingURL=main.css.map */
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(71, 5, 71) !important;
+  }
+}/*# sourceMappingURL=main.css.map */

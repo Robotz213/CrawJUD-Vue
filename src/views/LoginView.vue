@@ -36,10 +36,3 @@ async function handleSubmit(e: Event) {
     </form>
   </main>
 </template>
-
-<style scoped>
-.form-signin {
-  max-width: 330px;
-  padding: 1rem;
-}
-</style>
