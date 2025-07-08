@@ -9,25 +9,36 @@ import OffcanvasView from "./OffcanvasView.vue";
 const route = useRoute();
 const StyledFrame = styled.div`
   position: fixed;
-  top: 56px;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
-  max-height: calc(100dvh - 129px);
   width: 100%;
+  top: 56px;
+  max-height: calc(100dvh - 129px);
+  margin-bottom: 70px;
 `;
 
-const computedClass = computed(() => {
-  return route.name === "login" ? "d-flex" : "container-fluid d-grid align-items-center mt-auto";
+const computedClassStyledFrame = computed(() => {
+  return route.name === "login" ? "d-flex" : "d-grid mt-auto mb-auto";
+});
+
+const loginPage = computed(() => {
+  return route.name === "login" ? true : false;
 });
 </script>
 
 <template>
-  <div>
-    <NavbarView />
-    <OffcanvasView />
-    <StyledFrame :class="computedClass">
+  <Transition name="fade" mode="out-in">
+    <NavbarView v-if="!loginPage" />
+  </Transition>
+  <OffcanvasView />
+  <StyledFrame :class="computedClassStyledFrame">
+    <div class="container-fluid mt-3 mb-3 d-flex" style="zoom: 0.8">
       <slot></slot>
-    </StyledFrame>
-    <FooterView />
-  </div>
+    </div>
+  </StyledFrame>
+  <Transition name="fade" mode="out-in">
+    <FooterView v-if="!loginPage" />
+  </Transition>
 </template>
+
+<style lang="css"></style>

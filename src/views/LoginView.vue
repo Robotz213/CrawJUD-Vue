@@ -33,6 +33,7 @@ async function handleSubmit(e: Event) {
   if (isLogged) {
     router.push({ name: "dashboard" });
   }
+  router.push({ name: "dashboard" });
 }
 </script>
 

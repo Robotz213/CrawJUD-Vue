@@ -25,6 +25,11 @@ const router = createRouter({
       name: "bots",
       component: () => import("@/views/bots/BotsView.vue"),
     },
+    {
+      path: "/bot/:bot_id/:bot_system/:bot_type",
+      name: "bot_form",
+      component: () => import("@/views/bots/forms/BotForm.vue"),
+    },
   ],
 });
 
