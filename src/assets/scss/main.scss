@@ -35,3 +35,34 @@ body {
 body {
   background: linear-gradient(76.8deg, rgb(121, 45, 129) 3.6%, rgb(36, 31, 98) 90.4%);
 }
+
+.menu-heading {
+  padding: 1.4rem 1rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: rgba(46, 46, 46, 0.726);
+  @media (prefers-color-scheme: dark) {
+    color: rgba(255, 255, 255, 0.514);
+  }
+}
+
+.nav-link-icon {
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+.nav-link {
+  font-size: 0.9rem;
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  color: #000000e1;
+  @media (prefers-color-scheme: dark) {
+    color: rgba(255, 255, 255, 0.795);
+  }
+}
+
+.text {
+  font-weight: 500;
+}
