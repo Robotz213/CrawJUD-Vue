@@ -15,7 +15,7 @@ const StyledFrame = styled.div`
 <template>
   <NavbarView />
   <OffcanvasView />
-  <StyledFrame class="container-fluid">
+  <StyledFrame class="container-fluid p-4">
     <slot></slot>
   </StyledFrame>
   <FooterView />
