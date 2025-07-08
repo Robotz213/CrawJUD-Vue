@@ -31,8 +31,6 @@ body {
   border-top-right-radius: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: rgb(71, 5, 71) !important;
-  }
+body {
+  background-color: rgb(71, 5, 71) !important;
 }

@@ -9,14 +9,17 @@ const StyledFrame = styled.div`
   top: 56px;
   overflow-y: scroll;
   max-height: calc(100dvh - 129px);
+  width: 100%;
 `;
 </script>
 
 <template>
-  <NavbarView />
-  <OffcanvasView />
-  <StyledFrame class="container-fluid p-4">
-    <slot></slot>
-  </StyledFrame>
-  <FooterView />
+  <div>
+    <NavbarView />
+    <OffcanvasView />
+    <StyledFrame class="container-fluid p-4">
+      <slot></slot>
+    </StyledFrame>
+    <FooterView />
+  </div>
 </template>

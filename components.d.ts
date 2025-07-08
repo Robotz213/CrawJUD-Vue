@@ -8,12 +8,27 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    BButton: typeof import('bootstrap-vue-next/components/BButton')['BButton']
+    BCollapse: typeof import('bootstrap-vue-next/components/BCollapse')['BCollapse']
+    BDropdownItem: typeof import('bootstrap-vue-next/components/BDropdown')['BDropdownItem']
     BFormInput: typeof import('bootstrap-vue-next/components/BFormInput')['BFormInput']
+    BNavbar: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbar']
+    BNavbarBrand: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbarBrand']
+    BNavbarNav: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbarNav']
+    BNavbarToggle: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbarToggle']
+    BNavForm: typeof import('bootstrap-vue-next/components/BNav')['BNavForm']
+    BNavItem: typeof import('bootstrap-vue-next/components/BNav')['BNavItem']
+    BNavItemDropdown: typeof import('bootstrap-vue-next/components/BNav')['BNavItemDropdown']
     FooterView: typeof import('./src/components/FooterView.vue')['default']
+    IBiHome: typeof import('~icons/bi/home')['default']
+    IMaterialSymbolsHomeOutlineRounded: typeof import('~icons/material-symbols/home-outline-rounded')['default']
     MainFrame: typeof import('./src/components/MainFrame.vue')['default']
     NavbarView: typeof import('./src/components/NavbarView.vue')['default']
     OffcanvasView: typeof import('./src/components/OffcanvasView.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+  }
+  export interface GlobalDirectives {
+    vBColorMode: typeof import('bootstrap-vue-next/directives/BColorMode')['vBColorMode']
   }
 }

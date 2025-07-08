@@ -1,34 +1,129 @@
+<script setup lang="ts">
+import MaterialSymbolsChecklistRtlRounded from "~icons/material-symbols/checklist-rtl-rounded?width=24px&height=24px";
+import MaterialSymbolsTableOutline from "~icons/material-symbols/table-outline?width=24px&height=24px";
+import RiRobot2Line from "~icons/ri/robot-2-line?width=24px&height=24px";
+import RiSpeedUpFill from "~icons/ri/speed-up-fill?width=24px&height=24px";
+</script>
+
 <template>
   <div
-    class="offcanvas offcanvas-start"
+    class="offcanvas offcanvas-start offcanvas-sm"
     tabindex="-1"
     id="offCanvasCrawJUD"
     aria-labelledby="offCanvasCrawJUDLabel"
   >
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offCanvasCrawJUDLabel">Offcanvas</h5>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="offcanvas"
-        aria-label="Close"
-      ></button>
-    </div>
-    <div class="offcanvas-body">
-      <div>
-        Some text as placeholder. In real life you can have the elements you have chosen. Like,
-        text, images, lists, etc.
-      </div>
-      <div class="dropdown mt-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-          Dropdown button
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <div
+      class="d-flex flex-column gap-0 pt-3 pb-3 bg-body-tertiary text-body-tertiary"
+      style="width: 225px; min-height: 100%"
+    >
+      <a
+        href="/"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+      >
+        <svg class="bi pe-none me-2" width="40" height="32" aria-hidden="true">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="fs-4">Sidebar</span>
+      </a>
+      <hr />
+      <div class="menu-heading">Core</div>
+      <ul class="nav d-flex nav-pills flex-column gap-0 mb-auto">
+        <li class="nav-item">
+          <RouterLink :to="{ name: 'dashboard' }" class="nav-link" aria-current="page">
+            <div class="nav-link-icon">
+              <RiSpeedUpFill />
+            </div>
+            <span class="text"> Dashboard </span>
+          </RouterLink>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <div class="nav-link-icon">
+              <MaterialSymbolsTableOutline />
+            </div>
+            <span class="text"> Execuções </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <div class="nav-link-icon">
+              <MaterialSymbolsChecklistRtlRounded />
+            </div>
+            <span class="text"> Tarefas Agendadas </span>
+          </a>
+        </li>
+        <div class="menu-heading">Interface</div>
+        <li class="nav-item">
+          <RouterLink :to="{ name: 'bots' }" class="nav-link">
+            <div class="nav-link-icon">
+              <RiRobot2Line />
+            </div>
+            <span class="text"> Robôs </span>
+          </RouterLink>
+          <a href="#"> </a>
+        </li>
+      </ul>
+      <hr />
+      <div class="dropdown ps-3">
+        <a
+          href="#"
+          class="d-flex align-items-center text-body-emphasis text-decoration-none dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            src="https://github.com/mdo.png"
+            alt=""
+            width="32"
+            height="32"
+            class="rounded-circle me-2"
+          />
+          <strong>mdo</strong>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+          <li><a class="dropdown-item" href="#">New project...</a></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li><a class="dropdown-item" href="#">Sign out</a></li>
         </ul>
       </div>
     </div>
   </div>
 </template>
+
+<style lang="css" scoped>
+.menu-heading {
+  padding: 1.4rem 1rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: rgba(46, 46, 46, 0.726);
+  @media (prefers-color-scheme: dark) {
+    color: rgba(255, 255, 255, 0.514);
+  }
+}
+
+.nav-link-icon {
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+.nav-link {
+  font-size: 0.9rem;
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  color: #000000e1;
+  @media (prefers-color-scheme: dark) {
+    color: rgba(255, 255, 255, 0.795);
+  }
+}
+
+.text {
+  font-weight: 500;
+}
+</style>
