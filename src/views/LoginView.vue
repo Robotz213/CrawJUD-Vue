@@ -41,7 +41,5 @@ async function handleSubmit(e: Event) {
 .form-signin {
   max-width: 330px;
   padding: 1rem;
-  top: 255px;
-  position: relative;
 }
 </style>
