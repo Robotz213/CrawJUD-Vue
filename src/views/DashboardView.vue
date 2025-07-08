@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import MainFrame from "@/components/MainFrame.vue";
 import DataTablesCore from "datatables.net-bs5";
 import DataTable from "datatables.net-vue3";
 DataTable.use(DataTablesCore);
@@ -23,7 +22,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <MainFrame>
+  <div>
     <h1 class="mt-4">Dashboard</h1>
     <ol class="breadcrumb mb-4">
       <li class="breadcrumb-item active">Dashboard</li>
@@ -120,5 +119,5 @@ onBeforeMount(() => {
         </DataTable>
       </div>
     </div>
-  </MainFrame>
+  </div>
 </template>
