@@ -6,7 +6,6 @@ import OffcanvasView from "./OffcanvasView.vue";
 const StyledFrame = styled.div`
   position: fixed;
   top: 56px;
-
   display: flex;
 `;
 </script>
