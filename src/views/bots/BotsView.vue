@@ -4,24 +4,16 @@ import logoEsaj from "@/assets/img/esaj2.png";
 import crawjud from "@/assets/img/figure_crawjud.png";
 import logoProjudi from "@/assets/img/projudi.png";
 import manager from "@/controllers/socketio";
+import { storeBot } from "@/stores/bot";
+import type { BotRecord } from "@/types";
+import { storeToRefs } from "pinia";
 import { computed, onBeforeMount, ref } from "vue";
-import { RouterLink } from "vue-router";
-
-interface BotRecord {
-  system: string;
-  state: string;
-  type: string;
-  classification: string;
-  display_name: string;
-  id: number;
-  client: string;
-  form_cfg: string;
-  text: string;
-}
-
+import { useRouter } from "vue-router";
+const router = useRouter();
 const botList = ref<BotRecord[]>([]);
 const io = manager.socket("/bots");
 
+const { bot } = storeToRefs(storeBot());
 const query = ref("");
 const filterBots = computed(() =>
   Array.from(botList.value).filter((item) =>
@@ -43,6 +35,18 @@ const imagesSrc: { [key: string]: string } = {
 
 function getLogo(system: string) {
   return imagesSrc[system] || crawjud;
+}
+
+function handleBotSelected(botInfo: BotRecord) {
+  bot.value = botInfo;
+  router.push({
+    name: "bot_form",
+    params: {
+      bot_id: botInfo.id,
+      bot_system: botInfo.system.toLowerCase(),
+      bot_type: botInfo.type.toLowerCase(),
+    },
+  });
 }
 </script>
 
@@ -85,19 +89,9 @@ function getLogo(system: string) {
                   <div
                     class="card-footer d-flex align-items-center justify-content-between bg-secondary bg-opacity-25"
                   >
-                    <RouterLink
-                      class="btn btn-success fw-semibold"
-                      :to="{
-                        name: 'bot_form',
-                        params: {
-                          bot_id: bot.id,
-                          bot_system: bot.system.toLowerCase(),
-                          bot_type: bot.type.toLowerCase(),
-                        },
-                      }"
-                    >
+                    <button class="btn btn-success fw-semibold" @click="handleBotSelected(bot)">
                       Acessar Robô
-                    </RouterLink>
+                    </button>
                   </div>
                 </div>
               </div>

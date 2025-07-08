@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { api } from "@/controllers/axios";
+import messageStore from "@/stores/message";
 import { isAxiosError } from "axios";
+import { storeToRefs } from "pinia";
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
-
 const router = useRouter();
 
 const Form = reactive({
@@ -28,7 +29,8 @@ async function handleSubmit(e: Event) {
       message = data.message;
     }
   }
-  alert(message);
+  const { message: msg } = storeToRefs(messageStore());
+  msg.value = message;
   if (isLogged) {
     router.push({ name: "dashboard" });
   }

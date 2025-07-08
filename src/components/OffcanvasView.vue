@@ -33,6 +33,7 @@ async function handleLogout(e: Event) {
     >
       <a
         href="#"
+        data-bs-toggle="offcanvas"
         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
       >
         <span class="ms-3 me-2">
@@ -44,7 +45,12 @@ async function handleLogout(e: Event) {
       <div class="menu-heading">Core</div>
       <ul class="nav d-flex nav-pills flex-column gap-0 mb-auto">
         <li class="nav-item">
-          <RouterLink :to="{ name: 'dashboard' }" class="nav-link" aria-current="page">
+          <RouterLink
+            :to="{ name: 'dashboard' }"
+            class="nav-link"
+            aria-current="page"
+            active-class="active"
+          >
             <div class="nav-link-icon">
               <RiSpeedUpFill />
             </div>
@@ -70,7 +76,7 @@ async function handleLogout(e: Event) {
         </li>
         <div class="menu-heading">Interface</div>
         <li class="nav-item">
-          <RouterLink :to="{ name: 'bots' }" class="nav-link">
+          <RouterLink :to="{ name: 'bots' }" class="nav-link" active-class="active">
             <div class="nav-link-icon">
               <RiRobot2Line />
             </div>

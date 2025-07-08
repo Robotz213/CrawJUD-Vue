@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { computed, reactive } from "vue";
+import { storeBot } from "@/stores/bot";
+import { storeToRefs } from "pinia";
+import { computed, onUnmounted, reactive } from "vue";
+
+const { bot } = storeToRefs(storeBot());
 
 async function handleSubmit(e: Event) {
   e.preventDefault();
@@ -10,12 +14,16 @@ const Form = reactive({
 });
 
 const tarefaAgendada = computed(() => Form.periodic_task);
+
+onUnmounted(() => {
+  bot.value = null;
+});
 </script>
 
 <template>
   <div class="container">
     <form class="card border-0 shadow rounded-3 my-5" @submit="handleSubmit">
-      <h4 class="card-header p-4">PROJUDI - CAPA</h4>
+      <h4 class="card-header p-4">{{ bot?.display_name }}</h4>
 
       <div class="card-body bg-warning bg-opacity-75 p-4 p-sm-5">
         <div class="row g-3 rounded justify-content-center p-3">

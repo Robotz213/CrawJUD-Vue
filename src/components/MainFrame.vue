@@ -3,6 +3,7 @@ import styled from "@vue-styled-components/core";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import FooterView from "./FooterView.vue";
+import ModalMessage from "./ModalMessage.vue";
 import NavbarView from "./NavbarView.vue";
 import OffcanvasView from "./OffcanvasView.vue";
 
@@ -39,6 +40,7 @@ const loginPage = computed(() => {
   <Transition name="fade" mode="out-in">
     <FooterView v-if="!loginPage" />
   </Transition>
+  <ModalMessage />
 </template>
 
 <style lang="css"></style>
