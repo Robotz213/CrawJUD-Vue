@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import logoCrawJUD from "@/assets/img/crawjud2.png";
 import { api } from "@/controllers/axios";
 import messageStore from "@/stores/message";
 import { isAxiosError } from "axios";
@@ -40,7 +41,7 @@ async function handleSubmit(e: Event) {
 <template>
   <main class="form-signin w-100 m-auto mt-auto">
     <form @submit="handleSubmit">
-      <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
+      <img class="mb-4" :src="logoCrawJUD" alt="Logo CrawJUD" width="75" />
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
       <div class="form-floating">
         <input

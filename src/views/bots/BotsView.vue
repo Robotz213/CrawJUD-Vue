@@ -52,28 +52,33 @@ function handleBotSelected(botInfo: BotRecord) {
 
 <template>
   <div class="container">
-    <div class="card">
-      <div class="card-header">
-        <h1 class="m-1">Robôs</h1>
-      </div>
-      <div class="card-body bg-warning bg-opacity-75">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-floating mb-3">
-              <input
-                type="search"
-                class="form-control"
-                id="floatingInput"
-                placeholder="..."
-                v-model="query"
-              />
-              <label class="fw-semibold" for="floatingInput">Buscar Robô</label>
-            </div>
-            <hr />
+    <div class="card-header mb-4">
+      <h1 class="m-1">Robôs</h1>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-floating mb-3">
+            <input
+              type="search"
+              class="form-control"
+              id="floatingInput"
+              placeholder="..."
+              v-model="query"
+            />
+            <label class="fw-semibold" for="floatingInput">Buscar Robô</label>
           </div>
-          <div class="col-md-12">
-            <div class="row g-4">
-              <div class="col-md-3 p-4" v-for="bot in filterBots" :key="bot.display_name">
+          <hr />
+        </div>
+        <div class="col-md-12">
+          <div class="row g-4">
+            <TransitionGroup name="fade" css>
+              <div
+                class="col-md-3 p-4"
+                v-for="(bot, index) in filterBots"
+                :key="bot.display_name"
+                :data-index="index"
+              >
                 <div class="card border border-dark border-3 rounded" style="min-height: 430px">
                   <h5 class="card-header bg-secondary bg-opacity-25">{{ bot.display_name }}</h5>
                   <img
@@ -95,7 +100,7 @@ function handleBotSelected(botInfo: BotRecord) {
                   </div>
                 </div>
               </div>
-            </div>
+            </TransitionGroup>
           </div>
         </div>
       </div>

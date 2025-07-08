@@ -1,5 +1,5 @@
 <template>
-  <BModal v-model="modal" ok-only title="Hello, World!"> {{ message }} </BModal>
+  <BModal v-model="modal" ok-only title="Mensagem"> {{ message }} </BModal>
 </template>
 
 <script setup lang="ts">

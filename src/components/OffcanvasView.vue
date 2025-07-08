@@ -1,18 +1,24 @@
 <script setup lang="ts">
 import { api } from "@/controllers/axios";
+import messageStore from "@/stores/message";
+import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import MaterialSymbolsChecklistRtlRounded from "~icons/material-symbols/checklist-rtl-rounded?width=24px&height=24px";
 import MaterialSymbolsTableOutline from "~icons/material-symbols/table-outline?width=24px&height=24px";
 import RiRobot2Line from "~icons/ri/robot-2-line?width=24px&height=24px";
 import RiSpeedUpFill from "~icons/ri/speed-up-fill?width=24px&height=24px";
-
 const router = useRouter();
 
 async function handleLogout(e: Event) {
   e.preventDefault();
 
   try {
-    await api.get("/logout");
+    const resp = await api.post("/logout");
+
+    if (resp.data.message || resp.data.msg) {
+      const { message } = storeToRefs(messageStore());
+      message.value = resp.data.message || resp.data.msg;
+    }
   } catch {
     //
   }
@@ -110,7 +116,7 @@ async function handleLogout(e: Event) {
             <hr class="dropdown-divider" />
           </li>
           <li>
-            <a class="dropdown-item" @click="handleLogout">Sign out</a>
+            <a data-bs-toggle="offcanvas" class="dropdown-item" @click="handleLogout">Sign out</a>
           </li>
         </ul>
       </div>
