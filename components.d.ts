@@ -9,6 +9,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BFormInput: typeof import('bootstrap-vue-next/components/BFormInput')['BFormInput']
+    FooterView: typeof import('./src/components/FooterView.vue')['default']
     MainFrame: typeof import('./src/components/MainFrame.vue')['default']
     NavbarView: typeof import('./src/components/NavbarView.vue')['default']
     OffcanvasView: typeof import('./src/components/OffcanvasView.vue')['default']
