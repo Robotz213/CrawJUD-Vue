@@ -19,14 +19,14 @@ body {
   z-index: 2;
 }
 
-#app input[type=email] {
+#app input[type="email"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-#app input[type=password] {
+#app input[type="password"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-}/*# sourceMappingURL=main.css.map */
+} /*# sourceMappingURL=main.css.map */
