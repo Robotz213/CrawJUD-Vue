@@ -11,6 +11,7 @@ declare module 'vue' {
     BFormInput: typeof import('bootstrap-vue-next/components/BFormInput')['BFormInput']
     MainFrame: typeof import('./src/components/MainFrame.vue')['default']
     NavbarView: typeof import('./src/components/NavbarView.vue')['default']
+    OffcanvasView: typeof import('./src/components/OffcanvasView.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

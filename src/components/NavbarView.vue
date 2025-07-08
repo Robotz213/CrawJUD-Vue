@@ -1,7 +1,15 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top rounded rounded-bottom">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a
+        class="navbar-brand"
+        data-bs-toggle="offcanvas"
+        href="#offCanvasCrawJUD"
+        role="button"
+        aria-controls="offCanvasCrawJUD"
+      >
+        Navbar
+      </a>
       <button
         class="navbar-toggler"
         type="button"
