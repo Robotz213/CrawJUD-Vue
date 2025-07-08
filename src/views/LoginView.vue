@@ -1,11 +1,38 @@
 <script setup lang="ts">
+import { api } from "@/controllers/axios";
+import { isAxiosError } from "axios";
+import { reactive } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+
+const Form = reactive({
+  login: "",
+  password: "",
+  remember_me: false,
+});
+
 async function handleSubmit(e: Event) {
   e.preventDefault();
+  let message = "Erro ao realizar login";
+  let isLogged = false;
+  try {
+    const response = await api.request({ method: "POST", data: Form, url: "/login" });
+    const data = response.data;
 
-  router.push({ name: "dashboard" });
+    message = data.message;
+    isLogged = true;
+  } catch (err) {
+    console.log(err);
+    if (isAxiosError(err) && err.response && err.response.data && err.response.data.message) {
+      const data = err.response.data;
+      message = data.message;
+    }
+  }
+  alert(message);
+  if (isLogged) {
+    router.push({ name: "dashboard" });
+  }
 }
 </script>
 
@@ -16,19 +43,32 @@ async function handleSubmit(e: Event) {
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
       <div class="form-floating">
         <input
-          type="email"
+          type="text"
           class="form-control"
           id="floatingInput"
-          placeholder="name@example.com"
+          placeholder="You Login"
+          v-model="Form.login"
         />
-        <label for="floatingInput">Email address</label>
+        <label for="floatingInput">Login</label>
       </div>
       <div class="form-floating">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" />
+        <input
+          type="password"
+          class="form-control"
+          id="floatingPassword"
+          placeholder="Password"
+          v-model="Form.password"
+        />
         <label for="floatingPassword">Password</label>
       </div>
       <div class="form-check text-start my-3">
-        <input class="form-check-input" type="checkbox" value="remember-me" id="checkDefault" />
+        <input
+          class="form-check-input"
+          type="checkbox"
+          :value="false"
+          id="checkDefault"
+          v-model="Form.remember_me"
+        />
         <label class="form-check-label" for="checkDefault"> Remember me </label>
       </div>
       <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
