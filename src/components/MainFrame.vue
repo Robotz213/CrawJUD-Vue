@@ -32,7 +32,7 @@ const loginPage = computed(() => {
   </Transition>
   <OffcanvasView />
   <StyledFrame :class="computedClassStyledFrame">
-    <div class="container-fluid mt-3 mb-3 d-flex" style="zoom: 0.8">
+    <div class="container-fluid mt-3 mb-3 d-flex">
       <slot></slot>
     </div>
   </StyledFrame>

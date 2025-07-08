@@ -3,21 +3,48 @@ import DataTablesCore from "datatables.net-bs5";
 import DataTable from "datatables.net-vue3";
 DataTable.use(DataTablesCore);
 
+import { api } from "@/controllers/axios";
+import type { AxiosResponse } from "axios";
 import { onBeforeMount, ref } from "vue";
-import jsonExample from "./example.json";
 
 const data = ref<string[][]>([]);
 
-onBeforeMount(() => {
-  Array.from(jsonExample).map((value) => {
-    const temp_list: string[] = [];
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    Object.entries(value).map(([_, value]) => {
-      temp_list.push(value);
-    });
+interface ExecutionData {
+  pid: string;
+  user: string;
+  botname: string;
+  xlsx: string;
+  start_date: string;
+  status: string;
+  stop_date: string;
+  file_output: string;
+}
 
-    data.value.push(temp_list);
-  });
+interface ResponseData extends AxiosResponse {
+  data: {
+    data?: ExecutionData[];
+  };
+}
+
+onBeforeMount(async () => {
+  try {
+    const resp: ResponseData = await api.request({ method: "GET", url: "/executions" });
+
+    if (resp.data.data) {
+      const execut_data = resp.data.data;
+      Array.from(execut_data).map((value) => {
+        const temp_list: string[] = [];
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        Object.entries(value).map(([_, value]) => {
+          temp_list.push(value);
+        });
+
+        data.value.push(temp_list);
+      });
+    }
+  } catch {
+    //
+  }
 });
 </script>
 

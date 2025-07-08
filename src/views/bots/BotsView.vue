@@ -19,19 +19,7 @@ interface BotRecord {
   text: string;
 }
 
-const botList = ref<BotRecord[]>([
-  {
-    system: "",
-    state: "",
-    type: "",
-    classification: "",
-    display_name: "",
-    id: 0,
-    client: "",
-    form_cfg: "",
-    text: "",
-  },
-]);
+const botList = ref<BotRecord[]>([]);
 const io = manager.socket("/bots");
 
 const query = ref("");
@@ -42,10 +30,8 @@ const filterBots = computed(() =>
 );
 
 onBeforeMount(() => {
-  io.connect();
   io.emit("bots_list", (botData: BotRecord[]) => {
     botList.value = botData;
-    console.log(botList.value);
   });
 });
 

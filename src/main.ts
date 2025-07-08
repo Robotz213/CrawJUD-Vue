@@ -1,5 +1,7 @@
 import "@/assets/js/color-modes.js";
 import "@/assets/scss/main.css";
+import "@/controllers/axios";
+import "@/controllers/socketio";
 import { createBootstrap } from "bootstrap-vue-next";
 import "bootstrap-vue-next/dist/bootstrap-vue-next.css";
 import "bootstrap/dist/css/bootstrap.css";

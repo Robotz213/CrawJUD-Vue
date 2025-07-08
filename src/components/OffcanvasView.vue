@@ -1,8 +1,23 @@
 <script setup lang="ts">
+import { api } from "@/controllers/axios";
+import { useRouter } from "vue-router";
 import MaterialSymbolsChecklistRtlRounded from "~icons/material-symbols/checklist-rtl-rounded?width=24px&height=24px";
 import MaterialSymbolsTableOutline from "~icons/material-symbols/table-outline?width=24px&height=24px";
 import RiRobot2Line from "~icons/ri/robot-2-line?width=24px&height=24px";
 import RiSpeedUpFill from "~icons/ri/speed-up-fill?width=24px&height=24px";
+
+const router = useRouter();
+
+async function handleLogout(e: Event) {
+  e.preventDefault();
+
+  try {
+    await api.get("/logout");
+  } catch {
+    //
+  }
+  router.push({ name: "login" });
+}
 </script>
 
 <template>
@@ -17,13 +32,13 @@ import RiSpeedUpFill from "~icons/ri/speed-up-fill?width=24px&height=24px";
       style="width: 225px; min-height: 100%"
     >
       <a
-        href="/"
+        href="#"
         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
       >
-        <svg class="bi pe-none me-2" width="40" height="32" aria-hidden="true">
-          <use xlink:href="#bootstrap"></use>
-        </svg>
-        <span class="fs-4">Sidebar</span>
+        <span class="ms-3 me-2">
+          <img src="/src/assets/img/crawjud.ico" width="40" alt="Logo Sistema" />
+        </span>
+        <span class="fs-4">CrawJUD</span>
       </a>
       <hr />
       <div class="menu-heading">Core</div>
@@ -88,7 +103,9 @@ import RiSpeedUpFill from "~icons/ri/speed-up-fill?width=24px&height=24px";
           <li>
             <hr class="dropdown-divider" />
           </li>
-          <li><a class="dropdown-item" href="#">Sign out</a></li>
+          <li>
+            <a class="dropdown-item" @click="handleLogout">Sign out</a>
+          </li>
         </ul>
       </div>
     </div>

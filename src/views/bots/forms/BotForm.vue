@@ -22,7 +22,7 @@ const tarefaAgendada = computed(() => Form.periodic_task);
           <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
             <label class="form-label" for="xlsx">Arquivo de execução</label>
             <input
-              accept=".xlsx, .xls, .csv"
+              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
               class="form-control"
               data-placeholder="Arquivo de execução"
               id="xlsx"

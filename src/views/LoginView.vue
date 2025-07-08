@@ -23,7 +23,6 @@ async function handleSubmit(e: Event) {
     message = data.message;
     isLogged = true;
   } catch (err) {
-    console.log(err);
     if (isAxiosError(err) && err.response && err.response.data && err.response.data.message) {
       const data = err.response.data;
       message = data.message;
@@ -33,7 +32,6 @@ async function handleSubmit(e: Event) {
   if (isLogged) {
     router.push({ name: "dashboard" });
   }
-  router.push({ name: "dashboard" });
 }
 </script>
 
