@@ -132,6 +132,13 @@ onUnmounted(() => {
             <label class="form-label" for="state">Selecione o Estado</label>
             <SelectStateClientView />
           </div>
+          <div
+            v-if="EnabledInputs.client"
+            class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary"
+          >
+            <label class="form-label" for="state">Selecione o Cliente</label>
+            <SelectStateClientView />
+          </div>
           <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
             <div class="form-check">
               <input
