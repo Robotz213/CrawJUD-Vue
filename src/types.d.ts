@@ -10,4 +10,11 @@ interface BotRecord {
   text: string;
 }
 
-export type { BotRecord };
+interface CredentialsRecord {
+  [key: string]: [{ value?: string | null | boolean | number; text?: string; disabled?: boolean }];
+  elaw: [{ value?: string | null | boolean | number; text?: string; disabled?: boolean }];
+  projudi: [{ value?: string | null | boolean | number; text?: string; disabled?: boolean }];
+  esaj: [{ value?: string | null | boolean | number; text?: string; disabled?: boolean }];
+}
+
+export type { BotRecord, CredentialsRecord };

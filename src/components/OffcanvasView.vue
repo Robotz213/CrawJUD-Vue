@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { api } from "@/controllers/axios";
 import messageStore from "@/stores/message";
+import "bootstrap/dist/js/bootstrap.js";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import MaterialSymbolsChecklistRtlRounded from "~icons/material-symbols/checklist-rtl-rounded?width=24px&height=24px";

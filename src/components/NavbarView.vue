@@ -1,6 +1,26 @@
 <script setup lang="ts">
 import logoCrawjud from "@/assets/img/crawjud.png";
+import { socketBots } from "@/main";
+import { storeBot } from "@/stores/bot";
+import { useCredentialsStore } from "@/stores/credentials";
+import type { BotRecord, CredentialsRecord } from "@/types";
+import { storeToRefs } from "pinia";
 import MaterialSymbolsMenuRounded from "~icons/material-symbols/menu-rounded?width=24px&height=24px";
+import { mainSocket } from "../main";
+
+const { botList } = storeToRefs(storeBot());
+const { credentials } = storeToRefs(useCredentialsStore());
+mainSocket.connect();
+mainSocket.emit("connnect", (e: string) => {
+  console.log(e);
+});
+
+socketBots.emit("bots_list", (botData: BotRecord[]) => {
+  botList.value = botData;
+});
+socketBots.emit("bot_credentials", (credentialsData: CredentialsRecord) => {
+  credentials.value = credentialsData;
+});
 </script>
 
 <template>

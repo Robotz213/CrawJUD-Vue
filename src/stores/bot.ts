@@ -3,9 +3,10 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 const storeBot = defineStore("bot", () => {
+  const botList = ref<BotRecord[]>([]);
   const bot = ref<BotRecord | null>(null);
 
-  return { bot };
+  return { bot, botList };
 });
 
 export { storeBot };

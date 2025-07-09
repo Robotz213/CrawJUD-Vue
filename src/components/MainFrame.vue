@@ -8,6 +8,7 @@ import NavbarView from "./NavbarView.vue";
 import OffcanvasView from "./OffcanvasView.vue";
 
 const route = useRoute();
+
 const StyledFrame = styled.div`
   position: fixed;
   overflow-y: auto;

@@ -3,29 +3,20 @@ import logoElaw from "@/assets/img/elaw.png";
 import logoEsaj from "@/assets/img/esaj2.png";
 import crawjud from "@/assets/img/figure_crawjud.png";
 import logoProjudi from "@/assets/img/projudi.png";
-import manager from "@/controllers/socketio";
 import { storeBot } from "@/stores/bot";
 import type { BotRecord } from "@/types";
 import { storeToRefs } from "pinia";
-import { computed, onBeforeMount, ref } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
-const botList = ref<BotRecord[]>([]);
-const io = manager.socket("/bots");
 
-const { bot } = storeToRefs(storeBot());
+const { bot, botList } = storeToRefs(storeBot());
 const query = ref("");
 const filterBots = computed(() =>
   Array.from(botList.value).filter((item) =>
     item.display_name?.toLowerCase().includes(query.value.toLowerCase()),
   ),
 );
-
-onBeforeMount(() => {
-  io.emit("bots_list", (botData: BotRecord[]) => {
-    botList.value = botData;
-  });
-});
 
 const imagesSrc: { [key: string]: string } = {
   projudi: logoProjudi,

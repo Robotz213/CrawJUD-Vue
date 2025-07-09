@@ -3,6 +3,7 @@ import { storeBot } from "@/stores/bot";
 import { storeToRefs } from "pinia";
 import { computed, onMounted, onUnmounted, reactive } from "vue";
 import { useRouter } from "vue-router";
+import SelectCredentialsView from "./components/SelectCredentialsView.vue";
 
 const { bot } = storeToRefs(storeBot());
 const router = useRouter();
@@ -30,7 +31,6 @@ onUnmounted(() => {
   <div class="container">
     <form class="card border-0 shadow rounded-3 my-5" @submit="handleSubmit">
       <h4 class="card-header p-4">{{ bot?.display_name }}</h4>
-
       <div class="card-body p-4 p-sm-5">
         <div class="row g-3 rounded justify-content-center p-3">
           <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
@@ -46,45 +46,7 @@ onUnmounted(() => {
           </div>
           <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
             <label class="form-label" for="creds">Selecione a Credencial</label>
-            <select
-              class="form-control select2-hidden-accessible"
-              data-placeholder="Selecione a Credencial"
-              id="creds"
-              name="creds"
-              required
-              data-select2-id="creds"
-              tabindex="-1"
-              aria-hidden="true"
-            >
-              <option value="" data-select2-id="2">Selecione</option>
-              <option value="DRA PAULA PROJUDI">DRA PAULA PROJUDI</option>
-              <option value="DRA KATHYA PROJUDI">DRA KATHYA PROJUDI</option>
-              <option value="Evila Projudi">Evila Projudi</option></select
-            ><span
-              class="select2 select2-container select2-container--bootstrap-5"
-              dir="ltr"
-              data-select2-id="1"
-              ><span class="selection"
-                ><span
-                  class="select2-selection select2-selection--single"
-                  role="combobox"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  tabindex="0"
-                  aria-disabled="false"
-                  aria-labelledby="select2-creds-container"
-                  ><span
-                    class="select2-selection__rendered"
-                    id="select2-creds-container"
-                    role="textbox"
-                    aria-readonly="true"
-                    ><span class="select2-selection__placeholder"
-                      >Selecione a Credencial</span
-                    ></span
-                  ><span class="select2-selection__arrow" role="presentation"
-                    ><b role="presentation"></b></span></span></span
-              ><span class="dropdown-wrapper" aria-hidden="true"></span
-            ></span>
+            <SelectCredentialsView />
           </div>
           <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
             <label class="form-label" for="state">Selecione o Estado</label>
@@ -161,12 +123,6 @@ onUnmounted(() => {
               class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded"
               id="periodic_task_group"
             >
-              <input
-                id="periodic_task_group-0-csrf_token"
-                name="periodic_task_group-0-csrf_token"
-                type="hidden"
-                value="ImJjZGIxOTY0MTU4NjliOWQxMDc4YTdkNDg1ZjgxMjlmOWMzYWE4YmYi.aG2FFQ.lzipc07CS70XxvkWpTgM0N20yT8"
-              />
               <div>
                 <div
                   class="col-md-12 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary"
@@ -300,9 +256,9 @@ onUnmounted(() => {
                 <div
                   class="col-md-12 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary"
                 >
-                  <label class="form-label" for="periodic_task_group-0-email_notify"
-                    >E-mail para notificação</label
-                  >
+                  <label class="form-label" for="periodic_task_group-0-email_notify">
+                    E-mail para notificação
+                  </label>
                   <input
                     class="form-control"
                     data-placeholder="E-mail para notificação"
