@@ -1,9 +1,10 @@
-import type { CredentialsRecord } from "@/types";
+import type { CredentialsRecord, CredentialsSelectorRecord } from "@/types";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useCredentialsStore = defineStore("credentialsStore", () => {
-  const credentials = ref<CredentialsRecord | null>(null);
+  const credentialsSelector = ref<CredentialsSelectorRecord | null>(null);
+  const credentialsList = ref<CredentialsRecord[] | null>(null);
 
-  return { credentials };
+  return { credentialsSelector, credentialsList };
 });

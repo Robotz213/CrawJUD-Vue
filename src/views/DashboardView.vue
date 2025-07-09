@@ -4,27 +4,10 @@ import DataTable from "datatables.net-vue3";
 DataTable.use(DataTablesCore);
 
 import { api } from "@/controllers/axios";
-import type { AxiosResponse } from "axios";
+import type { ResponseData } from "@/types";
 import { onBeforeMount, ref } from "vue";
 
 const data = ref<string[][]>([]);
-
-interface ExecutionData {
-  pid: string;
-  user: string;
-  botname: string;
-  xlsx: string;
-  start_date: string;
-  status: string;
-  stop_date: string;
-  file_output: string;
-}
-
-interface ResponseData extends AxiosResponse {
-  data: {
-    data?: ExecutionData[];
-  };
-}
 
 onBeforeMount(async () => {
   try {

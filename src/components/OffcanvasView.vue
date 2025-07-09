@@ -33,6 +33,8 @@ async function handleLogout(e: Event) {
   <div
     class="offcanvas offcanvas-start offcanvas-sm"
     tabindex="-1"
+    data-bs-scroll="true"
+    data-bs-backdrop="false"
     id="offCanvasCrawJUD"
     aria-labelledby="offCanvasCrawJUDLabel"
   >

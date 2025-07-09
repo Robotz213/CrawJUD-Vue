@@ -11,6 +11,7 @@ import { createPinia } from "pinia";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+
 const app = createApp(App);
 export const socketBots = manager.socket("/bots");
 export const mainSocket = manager.socket("/main");

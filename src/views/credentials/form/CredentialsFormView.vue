@@ -3,13 +3,13 @@ import { api } from "@/controllers/axios";
 import { socketBots } from "@/main";
 import { useCredentialsStore } from "@/stores/credentials";
 import { useMessageStore } from "@/stores/message";
-import type { CredentialsRecord } from "@/types";
+import type { CredentialsSelectorRecord } from "@/types";
 import { isAxiosError } from "axios";
 import { storeToRefs } from "pinia";
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 
-const { credentials } = storeToRefs(useCredentialsStore());
+const { credentialsSelector } = storeToRefs(useCredentialsStore());
 const { message } = storeToRefs(useMessageStore());
 const router = useRouter();
 const Form = reactive({
@@ -23,11 +23,11 @@ const Form = reactive({
   key: null,
 });
 
-async function handleSubmit(e: Event) {
-  socketBots.emit("bot_credentials", (credentialsData: CredentialsRecord) => {
-    credentials.value = credentialsData;
-  });
+socketBots.emit("bot_credentials", (credentialsData: CredentialsSelectorRecord) => {
+  credentialsSelector.value = credentialsData;
+});
 
+async function handleSubmit(e: Event) {
   e.preventDefault();
 
   if (!Form.system) {
