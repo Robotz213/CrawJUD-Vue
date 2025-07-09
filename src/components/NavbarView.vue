@@ -3,16 +3,21 @@ import logoCrawjud from "@/assets/img/crawjud.png";
 import { socketBots } from "@/main";
 import { storeBot } from "@/stores/bot";
 import { useCredentialsStore } from "@/stores/credentials";
+import messageStore from "@/stores/message";
 import type { BotRecord, CredentialsRecord } from "@/types";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 import MaterialSymbolsMenuRounded from "~icons/material-symbols/menu-rounded?width=24px&height=24px";
-import { mainSocket } from "../main";
-
+import { disconnectSocket, mainSocket } from "../main";
+const router = useRouter();
 const { botList } = storeToRefs(storeBot());
 const { credentials } = storeToRefs(useCredentialsStore());
-mainSocket.connect();
-mainSocket.emit("connnect", (e: string) => {
-  console.log(e);
+const { message } = storeToRefs(messageStore());
+mainSocket.on("not_logged", () => {
+  message.value = "Sessão expirada, realizar novo login!";
+  router.push({ name: "login" });
+
+  disconnectSocket();
 });
 
 socketBots.emit("bots_list", (botData: BotRecord[]) => {

@@ -13,10 +13,23 @@ import App from "./App.vue";
 import router from "./router";
 const app = createApp(App);
 export const socketBots = manager.socket("/bots");
-export const mainSocket = manager.socket("/main", {});
-socketBots.connect();
+export const mainSocket = manager.socket("/main");
 
 app.use(createPinia());
 app.use(router);
 app.use(createBootstrap()); // Important
 app.mount("#app");
+
+router.afterEach((to) => {
+  if (to.name !== "login") {
+    setTimeout(() => {
+      mainSocket.connect();
+      socketBots.connect();
+    }, 500);
+  }
+});
+
+export function disconnectSocket() {
+  mainSocket.disconnect();
+  socketBots.disconnect();
+}

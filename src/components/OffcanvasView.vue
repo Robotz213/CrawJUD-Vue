@@ -8,11 +8,12 @@ import MaterialSymbolsChecklistRtlRounded from "~icons/material-symbols/checklis
 import MaterialSymbolsTableOutline from "~icons/material-symbols/table-outline?width=24px&height=24px";
 import RiRobot2Line from "~icons/ri/robot-2-line?width=24px&height=24px";
 import RiSpeedUpFill from "~icons/ri/speed-up-fill?width=24px&height=24px";
+import { disconnectSocket } from "../main";
 const router = useRouter();
 
 async function handleLogout(e: Event) {
   e.preventDefault();
-
+  disconnectSocket();
   try {
     const resp = await api.post("/logout");
 
