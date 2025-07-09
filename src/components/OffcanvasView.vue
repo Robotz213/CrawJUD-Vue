@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { api } from "@/controllers/axios";
-import messageStore from "@/stores/message";
+import { useMessageStore } from "@/stores/message";
 import "bootstrap/dist/js/bootstrap.js";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import MaterialSymbolsChecklistRtlRounded from "~icons/material-symbols/checklist-rtl-rounded?width=24px&height=24px";
+import MaterialSymbolsKeyOutlineRounded from "~icons/material-symbols/key-outline-rounded?width=24px&height=24px";
 import MaterialSymbolsTableOutline from "~icons/material-symbols/table-outline?width=24px&height=24px";
 import RiRobot2Line from "~icons/ri/robot-2-line?width=24px&height=24px";
 import RiSpeedUpFill from "~icons/ri/speed-up-fill?width=24px&height=24px";
@@ -18,7 +19,7 @@ async function handleLogout(e: Event) {
     const resp = await api.post("/logout");
 
     if (resp.data.message || resp.data.msg) {
-      const { message } = storeToRefs(messageStore());
+      const { message } = storeToRefs(useMessageStore());
       message.value = resp.data.message || resp.data.msg;
     }
   } catch {
@@ -89,6 +90,15 @@ async function handleLogout(e: Event) {
               <RiRobot2Line />
             </div>
             <span class="text"> Robôs </span>
+          </RouterLink>
+          <a href="#"> </a>
+        </li>
+        <li class="nav-item">
+          <RouterLink :to="{ name: 'credentials' }" class="nav-link" active-class="active">
+            <div class="nav-link-icon">
+              <MaterialSymbolsKeyOutlineRounded />
+            </div>
+            <span class="text"> Credenciais </span>
           </RouterLink>
           <a href="#"> </a>
         </li>

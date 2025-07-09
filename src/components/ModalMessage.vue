@@ -4,13 +4,14 @@
 
 <script setup lang="ts">
 import { api } from "@/controllers/axios";
-import messageStore from "@/stores/message";
+import { useMessageStore } from "@/stores/message";
+
 import { storeToRefs } from "pinia";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const { message } = storeToRefs(messageStore());
+const { message } = storeToRefs(useMessageStore());
 const modal = ref(false);
 
 watch(message, () => {

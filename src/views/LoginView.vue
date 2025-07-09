@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import logoCrawJUD from "@/assets/img/crawjud2.png";
 import { api } from "@/controllers/axios";
-import messageStore from "@/stores/message";
+import { useMessageStore } from "@/stores/message";
+
 import { isAxiosError } from "axios";
 import { storeToRefs } from "pinia";
 import { reactive } from "vue";
@@ -30,7 +31,7 @@ async function handleSubmit(e: Event) {
       message = data.message;
     }
   }
-  const { message: msg } = storeToRefs(messageStore());
+  const { message: msg } = storeToRefs(useMessageStore());
   msg.value = message;
   if (isLogged) {
     router.push({ name: "dashboard" });
