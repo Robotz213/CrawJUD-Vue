@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { storeBot } from "@/stores/bot";
 import { storeToRefs } from "pinia";
-import { computed, onUnmounted, reactive } from "vue";
+import { computed, onMounted, onUnmounted, reactive } from "vue";
+import { useRouter } from "vue-router";
 
 const { bot } = storeToRefs(storeBot());
-
+const router = useRouter();
 async function handleSubmit(e: Event) {
   e.preventDefault();
 }
@@ -14,6 +15,11 @@ const Form = reactive({
 });
 
 const tarefaAgendada = computed(() => Form.periodic_task);
+onMounted(() => {
+  if (bot.value === null) {
+    router.push({ name: "bots" });
+  }
+});
 
 onUnmounted(() => {
   bot.value = null;
@@ -25,7 +31,7 @@ onUnmounted(() => {
     <form class="card border-0 shadow rounded-3 my-5" @submit="handleSubmit">
       <h4 class="card-header p-4">{{ bot?.display_name }}</h4>
 
-      <div class="card-body bg-warning bg-opacity-75 p-4 p-sm-5">
+      <div class="card-body p-4 p-sm-5">
         <div class="row g-3 rounded justify-content-center p-3">
           <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
             <label class="form-label" for="xlsx">Arquivo de execução</label>
@@ -38,7 +44,6 @@ onUnmounted(() => {
               type="file"
             />
           </div>
-
           <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
             <label class="form-label" for="creds">Selecione a Credencial</label>
             <select
@@ -81,7 +86,6 @@ onUnmounted(() => {
               ><span class="dropdown-wrapper" aria-hidden="true"></span
             ></span>
           </div>
-
           <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
             <label class="form-label" for="state">Selecione o Estado</label>
             <select
@@ -120,7 +124,6 @@ onUnmounted(() => {
               ><span class="dropdown-wrapper" aria-hidden="true"></span
             ></span>
           </div>
-
           <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
             <div class="form-check">
               <input
@@ -136,7 +139,6 @@ onUnmounted(() => {
               >
             </div>
           </div>
-
           <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
             <div class="form-check form-switch">
               <input
