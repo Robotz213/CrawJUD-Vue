@@ -1,3 +1,20 @@
+<script setup lang="ts">
+import { storeBot } from "@/stores/bot";
+import { storeToRefs } from "pinia";
+import SelectButtonsView from "./SelectButtonsView.vue";
+
+const { form } = storeToRefs(storeBot());
+const elements = [
+  { id: "item-0", name: "sun", label: "Domingo", value: null },
+  { id: "item-1", name: "mon", label: "Segunda", value: null },
+  { id: "item-2", name: "tue", label: "Terça", value: null },
+  { id: "item-3", name: "Wed", label: "Quarta", value: null },
+  { id: "item-4", name: "thu", label: "Quinta", value: null },
+  { id: "item-5", name: "fri", label: "Sexta", value: null },
+  { id: "item-6", name: "sat", label: "Sábado", value: null },
+];
+</script>
+
 <template>
   <div>
     <div class="col-md-12 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
@@ -8,7 +25,7 @@
         id="periodic_task_group-0-task_name"
         name="periodic_task_group-0-task_name"
         type="text"
-        value=""
+        v-model="form.task_name"
       />
     </div>
     <div class="col-md-12 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
@@ -19,85 +36,15 @@
         id="periodic_task_group-0-hour_minute"
         name="periodic_task_group-0-hour_minute"
         type="time"
-        value="09:15"
+        v-model="form.task_hour_minute"
       />
     </div>
     <div class="col-md-12 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
-      <span class="tex"
-        ><label class="form-label" for="periodic_task_group-0-days">Dias de execução</label></span
-      >
+      <span class="tex">
+        <label class="form-label" for="periodic_task_group-0-days">Dias de execução</label>
+      </span>
       <hr />
-      <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-        <input
-          type="checkbox"
-          class="btn-check"
-          id="periodic_task_group-0-days-0"
-          name="periodic_task_group-0-days"
-          value="sun"
-          autocomplete="off"
-        />
-        <label class="btn btn-outline-primary" for="periodic_task_group-0-days-0">Domingo</label>
-
-        <input
-          type="checkbox"
-          class="btn-check"
-          id="periodic_task_group-0-days-1"
-          name="periodic_task_group-0-days"
-          value="mon"
-          autocomplete="off"
-        />
-        <label class="btn btn-outline-primary" for="periodic_task_group-0-days-1">Segunda</label>
-
-        <input
-          type="checkbox"
-          class="btn-check"
-          id="periodic_task_group-0-days-2"
-          name="periodic_task_group-0-days"
-          value="tue"
-          autocomplete="off"
-        />
-        <label class="btn btn-outline-primary" for="periodic_task_group-0-days-2">Terça</label>
-
-        <input
-          type="checkbox"
-          class="btn-check"
-          id="periodic_task_group-0-days-3"
-          name="periodic_task_group-0-days"
-          value="wed"
-          autocomplete="off"
-        />
-        <label class="btn btn-outline-primary" for="periodic_task_group-0-days-3">Quarta</label>
-
-        <input
-          type="checkbox"
-          class="btn-check"
-          id="periodic_task_group-0-days-4"
-          name="periodic_task_group-0-days"
-          value="thu"
-          autocomplete="off"
-        />
-        <label class="btn btn-outline-primary" for="periodic_task_group-0-days-4">Quinta</label>
-
-        <input
-          type="checkbox"
-          class="btn-check"
-          id="periodic_task_group-0-days-5"
-          name="periodic_task_group-0-days"
-          value="fri"
-          autocomplete="off"
-        />
-        <label class="btn btn-outline-primary" for="periodic_task_group-0-days-5">Sexta</label>
-
-        <input
-          type="checkbox"
-          class="btn-check"
-          id="periodic_task_group-0-days-6"
-          name="periodic_task_group-0-days"
-          value="sat"
-          autocomplete="off"
-        />
-        <label class="btn btn-outline-primary" for="periodic_task_group-0-days-6">Sábado</label>
-      </div>
+      <SelectButtonsView v-bind:elements="elements" v-model="form.days_task" />
     </div>
     <div class="col-md-12 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
       <label class="form-label" for="periodic_task_group-0-email_notify">
@@ -109,7 +56,7 @@
         id="periodic_task_group-0-email_notify"
         name="periodic_task_group-0-email_notify"
         type="email"
-        value=""
+        v-model="form.email_notify"
       />
     </div>
   </div>

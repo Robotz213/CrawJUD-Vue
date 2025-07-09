@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { storeBot } from "@/stores/bot";
 import { storeToRefs } from "pinia";
-import { computed, onMounted, onUnmounted, reactive } from "vue";
+import { computed, onBeforeMount, onMounted, onUnmounted, reactive } from "vue";
 import { useRouter } from "vue-router";
 import ScheduleTaskFormView from "./components/ScheduleTaskFormView.vue";
 import SelectCredentialsView from "./components/SelectCredentialsView.vue";
 import SelectStateClientView from "./components/SelectStateClientView.vue";
+import formConfig from "./formconfig.json";
 
-const { bot } = storeToRefs(storeBot());
+type Classification = keyof typeof formConfig;
+
+const { bot, form } = storeToRefs(storeBot());
 const router = useRouter();
 async function handleSubmit(e: Event) {
   e.preventDefault();
@@ -27,6 +30,48 @@ onMounted(() => {
 onUnmounted(() => {
   bot.value = null;
 });
+
+const EnabledInputs = reactive<{ [key: string]: boolean }>({
+  xlsx: false,
+  creds: false,
+  parte_name: false,
+  doc_parte: false,
+  data_inicio: false,
+  data_fim: false,
+  polo_parte: false,
+  state: false,
+  varas: false,
+  client: false,
+  otherfiles: false,
+  confirm_fields: false,
+  periodic_task: false,
+});
+
+onBeforeMount(() => {
+  if (!bot.value?.classification) return;
+  if (!bot.value.form_cfg) return;
+
+  const classification = bot.value.classification as Classification;
+  type FormConfig = keyof (typeof formConfig)[typeof classification];
+
+  const formcfg = bot.value.form_cfg as FormConfig;
+  const formconfigClass = formConfig[classification];
+  const formconfigList = formconfigClass[formcfg];
+
+  Object.entries(EnabledInputs).map(([key, value]) => {
+    const isKey = Array.from(formconfigList).find((val) => val === key);
+    console.log(isKey);
+    if (isKey) {
+      EnabledInputs[key] = !value;
+    }
+  });
+});
+
+onUnmounted(() => {
+  Object.entries(EnabledInputs).forEach(([key]) => {
+    EnabledInputs[key] = false;
+  });
+});
 </script>
 
 <template>
@@ -35,22 +80,55 @@ onUnmounted(() => {
       <h4 class="card-header p-4">{{ bot?.display_name }}</h4>
       <div class="card-body p-4 p-sm-5">
         <div class="row g-3 rounded justify-content-center p-3">
-          <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
-            <label class="form-label" for="xlsx">Arquivo de execução</label>
-            <input
-              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          <div
+            v-if="EnabledInputs.xlsx"
+            class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary"
+          >
+            <BFormFile
+              v-model="form.xlsx"
+              label="Arquivo de execução"
+              label-class="form-label"
               class="form-control"
               data-placeholder="Arquivo de execução"
               id="xlsx"
               name="xlsx"
               type="file"
+              required
+              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             />
           </div>
-          <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
+          <div
+            class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary"
+            v-if="EnabledInputs.otherfiles"
+          >
+            <BFormFile
+              v-model="form.xlsx"
+              label="Arquivo Adicionais"
+              label-class="form-label"
+              class="form-control"
+              data-placeholder="Arquivo Adicionais"
+              id="xlsx"
+              name="xlsx"
+              type="file"
+              required
+              multiple
+              :accept="[
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'application/pdf',
+              ]"
+            />
+          </div>
+          <div
+            v-if="EnabledInputs.creds"
+            class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary"
+          >
             <label class="form-label" for="creds">Selecione a Credencial</label>
             <SelectCredentialsView />
           </div>
-          <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
+          <div
+            v-if="EnabledInputs.state"
+            class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary"
+          >
             <label class="form-label" for="state">Selecione o Estado</label>
             <SelectStateClientView />
           </div>
@@ -106,9 +184,13 @@ onUnmounted(() => {
           value="Iniciar Execução"
         />
 
-        <a class="btn btn-outline-primary fw-semibold" href="/get_model/1/projudi/capa/projudi_capa"
-          >Gerar Modelo</a
+        <a
+          disabled
+          class="btn btn-outline-primary fw-semibold"
+          href="/get_model/1/projudi/capa/projudi_capa"
         >
+          Gerar Modelo
+        </a>
       </div>
     </form>
   </div>
