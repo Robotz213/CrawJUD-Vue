@@ -21,4 +21,17 @@ interface TypeEnabledInputs {
   periodic_task: boolean;
 }
 
-export type { SelectProperties, TypeEnabledInputs };
+type Classification = "JURIDICO" | "ADMINISTRATIVO" | "INTERNO";
+type FormConfig =
+  | "only_auth"
+  | "file_auth"
+  | "multiple_files"
+  | "only_file"
+  | "pautas"
+  | "proc_parte";
+
+interface FormConfigRecord {
+  [key: FormConfig | string]: string[];
+}
+
+export type { Classification, FormConfig, FormConfigRecord, SelectProperties, TypeEnabledInputs };

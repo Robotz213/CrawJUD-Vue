@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SelectProperties } from "../types";
+import type { SelectProperties } from "../../types";
 
 const props = defineProps({
   elements: {

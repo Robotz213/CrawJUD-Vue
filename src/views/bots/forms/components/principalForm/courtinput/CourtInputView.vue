@@ -29,20 +29,17 @@ const ex1Options = ref<selectCourts[]>([]);
 const query = ref("");
 
 const queryOptionsCourt = computed(() => {
-  const filtered = Array.from(ex1Options.value).filter((item) => {
+  return Array.from(ex1Options.value).filter((item) => {
     if (item.text.toLowerCase().includes(query.value.toLowerCase())) {
       return true;
     }
 
     return false;
   });
-  console.log(filtered);
-  return filtered;
 });
 
 onBeforeMount(() => {
   if (!(bot.value?.system || bot.value?.state)) return;
-  console.log(varas);
   const varasRecord = varas as unknown as JsonVaras;
   const courts: selectCourts[] = [];
 
