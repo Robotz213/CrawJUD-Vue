@@ -76,8 +76,15 @@ const list_opts = [
   // },
 ];
 
+function randomId() {
+  return Math.random()
+    .toString(36)
+    .replace(/[^a-z]+/g, "")
+    .substring(0, 4);
+}
+
 function setClass(itemName: string) {
-  return itemName === "core" || itemName === "system" ? "menu-heading" : "nav-item";
+  return itemName === "div" ? "menu-heading" : "nav-item";
 }
 </script>
 
@@ -105,12 +112,14 @@ function setClass(itemName: string) {
       <hr />
       <ul class="nav d-flex nav-pills flex-column gap-0 mb-auto">
         <component
-          :class="setClass(item.name)"
+          :class="setClass(item.tag)"
           v-for="item in list_opts"
           :key="item.id"
           :is="item.tag"
+          :name="item.name"
+          :id="`item-${item.name}-${randomId()}`"
         >
-          <span v-if="item.name === 'system' || item.name === 'core'">
+          <span v-if="item.tag === 'div'">
             {{ item.text }}
           </span>
           <RouterLink
