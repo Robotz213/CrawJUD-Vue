@@ -16,7 +16,7 @@ const elements = [
 </script>
 
 <template>
-  <div>
+  <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded" id="periodic_task_group">
     <div class="col-md-12 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
       <label class="form-label" for="periodic_task_group-0-task_name">Nome da tarefa</label>
       <input

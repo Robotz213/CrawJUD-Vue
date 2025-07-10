@@ -15,8 +15,9 @@ import router from "./router";
 const app = createApp(App);
 export const socketBots = manager.socket("/bots");
 export const mainSocket = manager.socket("/main");
+export const pinia = createPinia();
 
-app.use(createPinia());
+app.use(pinia);
 app.use(router);
 app.use(createBootstrap()); // Important
 app.mount("#app");
