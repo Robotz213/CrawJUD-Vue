@@ -1,7 +1,7 @@
 import type { BotRecord } from "@/types";
 import { defineStore } from "pinia";
 import { reactive, ref } from "vue";
-
+import botListJson from "./botsList.json";
 interface TypeFormBot {
   xlsx: File | File[] | null;
   creds: string | null;
@@ -23,7 +23,8 @@ interface TypeFormBot {
 }
 
 const storeBot = defineStore("bot", () => {
-  const botList = ref<BotRecord[]>([]);
+  const jsonlistBot = botListJson as unknown as BotRecord[];
+  const botList = ref<BotRecord[]>(jsonlistBot);
   const bot = ref<BotRecord | null>(null);
 
   const form = reactive<TypeFormBot>({

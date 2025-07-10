@@ -4,15 +4,21 @@ import { BOverlay } from "bootstrap-vue-next";
 import { storeToRefs } from "pinia";
 import { computed, onBeforeMount, onMounted, onUnmounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-import AnotherFilesInputView from "./components/principalForm/AnotherFilesInputView.vue";
-import ConfirmInputView from "./components/principalForm/ConfirmInputView.vue";
 import CourtInputView from "./components/principalForm/courtinput/CourtInputView.vue";
-import PrincipalFileInputView from "./components/principalForm/PrincipalFileInputView.vue";
-import SelectClientView from "./components/principalForm/SelectClientView.vue";
-import SelectCredentialsView from "./components/principalForm/SelectCredentialsView.vue";
-import SelectStateView from "./components/principalForm/SelectStateView.vue";
+import AnotherFilesInputView from "./components/principalForm/files/AnotherFilesInputView.vue";
+import PrincipalFileInputView from "./components/principalForm/files/PrincipalFileInputView.vue";
+import ClasseParteSelectView from "./components/principalForm/inputs/busca_processo/ClasseParteSelectView.vue";
+import DocumentParteInputView from "./components/principalForm/inputs/busca_processo/DocumentParteInputView.vue";
+import ParteNameInputView from "./components/principalForm/inputs/busca_processo/ParteNameInputView.vue";
+import ConfirmInputView from "./components/principalForm/inputs/ConfirmInputView.vue";
+import DataFimView from "./components/principalForm/inputs/data_inputs/DataFimView.vue";
+import DataInicioView from "./components/principalForm/inputs/data_inputs/DataInicioView.vue";
+import SelectClientView from "./components/principalForm/selects/SelectClientView.vue";
+import SelectCredentialsView from "./components/principalForm/selects/SelectCredentialsView.vue";
+import SelectStateView from "./components/principalForm/selects/SelectStateView.vue";
 import EnableScheduleView from "./components/scheduleForm/EnableScheduleView.vue";
 import ScheduleTaskFormView from "./components/scheduleForm/ScheduleTaskFormView.vue";
+import type { TypeEnabledInputs } from "./components/types";
 import formConfig from "./formconfig.json";
 
 type Classification = keyof typeof formConfig;
@@ -22,7 +28,7 @@ const overlayFormSubmit = ref(false);
 const { bot, form } = storeToRefs(storeBot());
 const router = useRouter();
 
-const EnabledInputs = reactive<{ [key: string]: boolean }>({
+const EnabledInputs = reactive<TypeEnabledInputs>({
   xlsx: false,
   creds: false,
   parte_name: false,
@@ -53,6 +59,7 @@ onMounted(() => {
   if (bot.value === null) {
     router.push({ name: "bots" });
   }
+  console.log(bot.value);
 });
 
 onUnmounted(() => {
@@ -92,9 +99,14 @@ onUnmounted(() => {
         <h4 class="card-header p-4">{{ bot?.display_name }}</h4>
         <div class="card-body p-4 p-sm-5">
           <div class="row g-3 rounded justify-content-center p-3">
+            <ParteNameInputView v-if="EnabledInputs.parte_name" />
+            <DocumentParteInputView v-if="EnabledInputs.doc_parte" />
+            <ClasseParteSelectView v-if="EnabledInputs.polo_parte" />
+            <DataInicioView v-if="EnabledInputs.data_inicio" />
+            <DataFimView v-if="EnabledInputs.data_fim" />
             <PrincipalFileInputView v-if="EnabledInputs.xlsx" />
             <AnotherFilesInputView v-if="EnabledInputs.otherfiles" />
-            <CourtInputView />
+            <CourtInputView v-if="EnabledInputs.varas" />
             <SelectCredentialsView v-if="EnabledInputs.creds" />
             <SelectStateView v-if="EnabledInputs.state" />
             <SelectClientView v-if="EnabledInputs.client" />
