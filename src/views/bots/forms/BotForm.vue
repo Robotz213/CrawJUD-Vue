@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { BOverlay } from "bootstrap-vue-next";
-import { computed } from "vue";
+import { computed, watch } from "vue";
 
+import { FileSocket } from "@/main";
 import formSetup from "@/setup/formbot/scripts/formSetup";
 
 const {
@@ -25,6 +26,25 @@ const {
   EnableScheduleView,
   ScheduleTaskFormView,
 } = formSetup();
+
+watch(
+  () => form.value.xlsx,
+  (newFiles: File | File[] | string | null) => {
+    if (newFiles && typeof newFiles !== "string") {
+      const files = Array.isArray(newFiles) ? newFiles : [newFiles];
+      console.log(files);
+      for (const file of files) {
+        const filename = file.name;
+        FileSocket.emit("add_file", {
+          file: {
+            name: filename,
+            content_type: file.type,
+          },
+        });
+      }
+    }
+  },
+);
 
 const tarefaAgendada = computed(() => form.value.periodic_task);
 </script>
@@ -59,7 +79,6 @@ const tarefaAgendada = computed(() => form.value.periodic_task);
             class="btn btn btn-outline-success btn-login fw-semibold"
             id="submit"
             name="submit"
-            onclick="showLoad()"
             type="submit"
             value="Iniciar Execução"
           />

@@ -15,6 +15,7 @@ import router from "./router";
 const app = createApp(App);
 export const socketBots = manager.socket("/bots");
 export const mainSocket = manager.socket("/main");
+export const FileSocket = manager.socket("/files");
 export const pinia = createPinia();
 
 app.use(pinia);
@@ -27,6 +28,7 @@ router.afterEach((to) => {
     setTimeout(() => {
       mainSocket.connect();
       socketBots.connect();
+      FileSocket.connect();
     }, 500);
   }
 });
