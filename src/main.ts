@@ -7,10 +7,11 @@ import { createBootstrap } from "bootstrap-vue-next";
 import "bootstrap-vue-next/dist/bootstrap-vue-next.css";
 import "bootstrap/dist/css/bootstrap.css";
 
-import { createPinia } from "pinia";
+import { createPinia, storeToRefs } from "pinia";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+import { useMessageStore } from "./stores/message";
 
 const app = createApp(App);
 export const socketBots = manager.socket("/bots");
@@ -37,3 +38,13 @@ export function disconnectSocket() {
   mainSocket.disconnect();
   socketBots.disconnect();
 }
+
+const { message } = storeToRefs(useMessageStore());
+
+mainSocket.on("connect_error", () => {
+  message.value = "Servidor fora do ar, por favor, tente novamente mais tarde!";
+  socketBots.disconnect();
+  mainSocket.disconnect();
+  FileSocket.disconnect();
+  router.push({ name: "login" });
+});
