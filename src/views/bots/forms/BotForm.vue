@@ -6,6 +6,7 @@ import { computed, onBeforeMount, onMounted, onUnmounted, reactive, ref } from "
 import { useRouter } from "vue-router";
 import AnotherFilesInputView from "./components/principalForm/AnotherFilesInputView.vue";
 import ConfirmInputView from "./components/principalForm/ConfirmInputView.vue";
+import CourtInputView from "./components/principalForm/courtinput/CourtInputView.vue";
 import PrincipalFileInputView from "./components/principalForm/PrincipalFileInputView.vue";
 import SelectClientView from "./components/principalForm/SelectClientView.vue";
 import SelectCredentialsView from "./components/principalForm/SelectCredentialsView.vue";
@@ -93,6 +94,7 @@ onUnmounted(() => {
           <div class="row g-3 rounded justify-content-center p-3">
             <PrincipalFileInputView v-if="EnabledInputs.xlsx" />
             <AnotherFilesInputView v-if="EnabledInputs.otherfiles" />
+            <CourtInputView />
             <SelectCredentialsView v-if="EnabledInputs.creds" />
             <SelectStateView v-if="EnabledInputs.state" />
             <SelectClientView v-if="EnabledInputs.client" />
