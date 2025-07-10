@@ -4,9 +4,9 @@ import { useMessageStore } from "@/stores/message";
 import "bootstrap/dist/js/bootstrap.js";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
-import MaterialSymbolsChecklistRtlRounded from "~icons/material-symbols/checklist-rtl-rounded?width=24px&height=24px";
+// import MaterialSymbolsChecklistRtlRounded from "~icons/material-symbols/checklist-rtl-rounded?width=24px&height=24px";
 import MaterialSymbolsKeyOutlineRounded from "~icons/material-symbols/key-outline-rounded?width=24px&height=24px";
-import MaterialSymbolsTableOutline from "~icons/material-symbols/table-outline?width=24px&height=24px";
+// import MaterialSymbolsTableOutline from "~icons/material-symbols/table-outline?width=24px&height=24px";
 import RiRobot2Line from "~icons/ri/robot-2-line?width=24px&height=24px";
 import RiSpeedUpFill from "~icons/ri/speed-up-fill?width=24px&height=24px";
 import { disconnectSocket } from "../main";
@@ -27,14 +27,64 @@ async function handleLogout(e: Event) {
   }
   router.push({ name: "login" });
 }
+
+const list_opts = [
+  {
+    id: 0,
+    name: "core",
+    text: "Core",
+    tag: "div",
+  },
+  {
+    id: 1,
+    name: "dashboard",
+    text: "Dashboard",
+    icon: RiSpeedUpFill,
+    tag: "li",
+  },
+  {
+    id: 2,
+    name: "bots",
+    text: "Robôs",
+    icon: RiRobot2Line,
+    tag: "li",
+  },
+  {
+    id: 3,
+    name: "system",
+    text: "Sistema",
+    tag: "div",
+  },
+  {
+    id: 4,
+    name: "credentials",
+    text: "Credenciais",
+    icon: MaterialSymbolsKeyOutlineRounded,
+    tag: "li",
+  },
+  // {
+  //   id: 5,
+  //   name: "executions",
+  //   text: "Execuções",
+  //   icon: MaterialSymbolsTableOutline,
+  // },
+  // {
+  //   id: 6,
+  //   name: "scheduled_tasks",
+  //   text: "Tarefas Agendadas",
+  //   icon: MaterialSymbolsChecklistRtlRounded,
+  // },
+];
+
+function setClass(itemName: string) {
+  return itemName === "core" || itemName === "system" ? "menu-heading" : "nav-item";
+}
 </script>
 
 <template>
   <div
     class="offcanvas offcanvas-start offcanvas-sm"
     tabindex="-1"
-    data-bs-scroll="true"
-    data-bs-backdrop="false"
     id="offCanvasCrawJUD"
     aria-labelledby="offCanvasCrawJUDLabel"
   >
@@ -53,57 +103,29 @@ async function handleLogout(e: Event) {
         <span class="fs-4">CrawJUD</span>
       </a>
       <hr />
-      <div class="menu-heading">Core</div>
       <ul class="nav d-flex nav-pills flex-column gap-0 mb-auto">
-        <li class="nav-item">
+        <component
+          :class="setClass(item.name)"
+          v-for="item in list_opts"
+          :key="item.id"
+          :is="item.tag"
+        >
+          <span v-if="item.name === 'system' || item.name === 'core'">
+            {{ item.text }}
+          </span>
           <RouterLink
-            :to="{ name: 'dashboard' }"
+            v-else
+            :to="{ name: item.name }"
             class="nav-link"
             aria-current="page"
             active-class="active"
           >
             <div class="nav-link-icon">
-              <RiSpeedUpFill />
+              <component :is="item.icon" />
             </div>
-            <span class="text"> Dashboard </span>
+            <span class="text"> {{ item.text }} </span>
           </RouterLink>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <div class="nav-link-icon">
-              <MaterialSymbolsTableOutline />
-            </div>
-            <span class="text"> Execuções </span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <div class="nav-link-icon">
-              <MaterialSymbolsChecklistRtlRounded />
-            </div>
-            <span class="text"> Tarefas Agendadas </span>
-          </a>
-        </li>
-        <div class="menu-heading">Interface</div>
-        <li class="nav-item">
-          <RouterLink :to="{ name: 'bots' }" class="nav-link" active-class="active">
-            <div class="nav-link-icon">
-              <RiRobot2Line />
-            </div>
-            <span class="text"> Robôs </span>
-          </RouterLink>
-          <a href="#"> </a>
-        </li>
-        <li class="nav-item">
-          <RouterLink :to="{ name: 'credentials' }" class="nav-link" active-class="active">
-            <div class="nav-link-icon">
-              <MaterialSymbolsKeyOutlineRounded />
-            </div>
-            <span class="text"> Credenciais </span>
-          </RouterLink>
-          <a href="#"> </a>
-        </li>
+        </component>
       </ul>
       <hr />
       <div class="dropdown ps-3">
@@ -160,6 +182,7 @@ async function handleLogout(e: Event) {
   position: relative;
   align-items: center;
   padding-bottom: 0.75rem;
+  margin-left: 0.5rem;
   color: #000000e1;
   @media (prefers-color-scheme: dark) {
     color: rgba(255, 255, 255, 0.795);
