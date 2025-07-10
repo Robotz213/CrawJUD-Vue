@@ -2,7 +2,7 @@
 import { BOverlay } from "bootstrap-vue-next";
 import { computed } from "vue";
 
-import formSetup from "../../../setup/formbot/formSetup";
+import formSetup from "../../../setup/formbot/scripts/formSetup";
 
 const {
   overlayFormSubmit,

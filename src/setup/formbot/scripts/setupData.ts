@@ -4,7 +4,6 @@ export default function () {
     let day = currentDate.getDate().toString();
     let month: string | number = currentDate.getMonth();
 
-    console.log(month);
     const year = currentDate.getFullYear();
     if (day.length === 1) day = `0${day}`;
     if (month.toString().length === 1) month = `0${month + 1}`;

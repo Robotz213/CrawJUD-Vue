@@ -1,26 +1,8 @@
 import type { BotRecord } from "@/types";
+import type { TypeFormBot } from "@/types/form_types";
 import { defineStore } from "pinia";
 import { reactive, ref } from "vue";
 import botListJson from "./botsList.json";
-interface TypeFormBot {
-  xlsx: File | File[] | null;
-  creds: string | null;
-  parte_name: string | null;
-  doc_parte: string | null;
-  data_inicio: Date | null;
-  data_fim: Date | null;
-  polo_parte: null;
-  state: string | null;
-  varas: string[] | null;
-  client: string | null;
-  otherfiles: File | File[] | null;
-  confirm_fields: boolean;
-  periodic_task: boolean;
-  days_task: string[];
-  task_hour_minute: Date | null;
-  task_name: string | null;
-  email_notify: string | null;
-}
 
 const storeBot = defineStore("bot", () => {
   const jsonlistBot = botListJson as unknown as BotRecord[];
@@ -36,7 +18,7 @@ const storeBot = defineStore("bot", () => {
     data_fim: null,
     polo_parte: null,
     state: null,
-    varas: null,
+    varas: [],
     client: null,
     otherfiles: null,
     confirm_fields: false,

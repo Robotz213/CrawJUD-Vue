@@ -38,6 +38,26 @@ interface TypeEnabledInputs {
   periodic_task: boolean;
 }
 
+interface TypeFormBot {
+  xlsx: File | File[] | null;
+  creds: string | null;
+  parte_name: string | null;
+  doc_parte: string | null;
+  data_inicio: Date | null;
+  data_fim: Date | null;
+  polo_parte: null;
+  state: string | null;
+  varas: string[] | null;
+  client: string | null;
+  otherfiles: File | File[] | null;
+  confirm_fields: boolean;
+  periodic_task: boolean;
+  days_task: string[];
+  task_hour_minute: Date | null;
+  task_name: string | null;
+  email_notify: string | null;
+}
+
 type Classification = "JURIDICO" | "ADMINISTRATIVO" | "INTERNO";
 type FormConfig =
   | "only_auth"
@@ -61,5 +81,6 @@ export type {
   selectCourts,
   SelectProperties,
   TypeEnabledInputs,
+  TypeFormBot,
   Varas,
 };

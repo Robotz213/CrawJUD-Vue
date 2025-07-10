@@ -1,8 +1,25 @@
 <script setup lang="ts">
-import formSetup from "@/setup/formbot/formSetup";
+import formSetup from "@/setup/formbot/scripts/formSetup";
+import type { JsonVaras, keyStates, keySystems, selectCourts } from "@/types/form_types";
 import { BFormGroup, BFormSelect, BInput } from "bootstrap-vue-next";
+import { onBeforeMount } from "vue";
 
-const { form, queryCourt, queryCourtOptionsCourt } = formSetup();
+const { form, queryCourt, queryCourtOptionsCourt, bot, varas, courtOptions } = formSetup();
+
+onBeforeMount(() => {
+  if (!(bot.value?.system || bot.value?.state)) return;
+  const varasRecord = varas as unknown as JsonVaras;
+  const courts: selectCourts[] = [];
+
+  const system = bot.value?.system.toUpperCase() as unknown as keySystems;
+  const state = bot.value?.state.toUpperCase() as unknown as keyStates;
+  const courtsJson = varasRecord[system][state];
+
+  Object.entries(courtsJson).map(([key, value], index) => {
+    courts.push({ value: key, text: value, id: index });
+  });
+  courtOptions.value.push(...courts);
+});
 </script>
 
 <template>

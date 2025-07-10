@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import setupData from "./setupData";
+import setupData from "../../../../scripts/setupData";
 
 const { getDate } = setupData();
 </script>
