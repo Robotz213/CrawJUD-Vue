@@ -9,9 +9,7 @@
         type="checkbox"
         value="y"
       />
-      <label class="form-check-label" for="confirm_fields">
-        Confirmo que os dados enviados estão corretos.
-      </label>
+      <label class="form-check-label"> Confirmo que os dados enviados estão corretos. </label>
     </div>
   </div>
 </template>

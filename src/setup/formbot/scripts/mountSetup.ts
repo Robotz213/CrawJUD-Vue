@@ -63,4 +63,19 @@ export default function (
       EnabledInputs[key] = false;
     });
   });
+
+  onBeforeMount(() => {
+    if (!(bot.value?.system || bot.value?.state)) return;
+    const varasRecord = varas as unknown as JsonVaras;
+    const courts: selectCourts[] = [];
+
+    const system = bot.value?.system.toUpperCase() as unknown as keySystems;
+    const state = bot.value?.state.toUpperCase() as unknown as keyStates;
+    const courtsJson = varasRecord[system][state];
+
+    Object.entries(courtsJson).map(([key, value], index) => {
+      courts.push({ value: key, text: value, id: index });
+    });
+    courtOptions.value.push(...courts);
+  });
 }

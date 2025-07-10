@@ -26,7 +26,7 @@ onBeforeMount(() => {
 
 <template>
   <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
-    <label class="form-label" for="creds">Selecione a Credencial</label>
+    <label class="form-label">Selecione a Credencial</label>
     <BFormSelect v-model="selected" :options="ex1Options" />
   </div>
 </template>

@@ -11,7 +11,7 @@ const stateOptions = ref([
 
 <template>
   <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
-    <label class="form-label" for="state">Selecione o Estado</label>
+    <label class="form-label">Selecione o Estado</label>
     <BFormSelect v-model="selected" :options="stateOptions" />
   </div>
 </template>

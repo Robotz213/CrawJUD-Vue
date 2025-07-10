@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
-    <label class="form-label" for="client">Selecione o Cliente</label>
+    <label class="form-label">Selecione o Cliente</label>
     <select
       class="form-control select2-hidden-accessible"
       data-placeholder="Selecione o Cliente"
