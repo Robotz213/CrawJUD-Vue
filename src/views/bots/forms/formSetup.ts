@@ -1,4 +1,10 @@
 import { storeBot } from "@/stores/bot";
+import type {
+  Classification,
+  FormConfig,
+  FormConfigRecord,
+  TypeEnabledInputs,
+} from "@/types/form_types";
 import { storeToRefs } from "pinia";
 import { onBeforeMount, onMounted, onUnmounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
@@ -17,7 +23,6 @@ import SelectStateView from "./components/principalForm/selects/SelectStateView.
 import EnableScheduleView from "./components/scheduleForm/EnableScheduleView.vue";
 import ScheduleTaskFormView from "./components/scheduleForm/ScheduleTaskFormView.vue";
 import formConfig from "./formconfig.json";
-import type { Classification, FormConfig, FormConfigRecord, TypeEnabledInputs } from "./types";
 
 export default function () {
   const overlayFormSubmit = ref(false);
