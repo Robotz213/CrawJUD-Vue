@@ -29,7 +29,7 @@ const {
 
 watch(
   () => form.value.xlsx,
-  (newFiles: File | File[] | string | null) => {
+  async (newFiles: File | File[] | string | null) => {
     if (newFiles && typeof newFiles !== "string") {
       const files = Array.isArray(newFiles) ? newFiles : [newFiles];
       console.log(files);
@@ -39,6 +39,8 @@ watch(
           file: {
             name: filename,
             content_type: file.type,
+            file: await file.arrayBuffer(),
+            content_length: file.size,
           },
         });
       }
