@@ -43,8 +43,8 @@ interface TypeFormBot {
   creds: string | null;
   parte_name: string | null;
   doc_parte: string | null;
-  data_inicio: Date | null;
-  data_fim: Date | null;
+  data_inicio: Date | string | null;
+  data_fim: Date | string | null;
   polo_parte: null;
   state: string | null;
   varas: string[] | null;
@@ -53,7 +53,7 @@ interface TypeFormBot {
   confirm_fields: boolean;
   periodic_task: boolean;
   days_task: string[];
-  task_hour_minute: Date | null;
+  task_hour_minute: Date | string | null;
   task_name: string | null;
   email_notify: string | null;
 }

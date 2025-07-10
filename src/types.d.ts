@@ -42,11 +42,15 @@ interface BotRecord {
   text: string;
 }
 
+type selectCredentialsRefType = [
+  { value?: string | null | boolean | number; text?: string; disabled?: boolean },
+];
+
 interface CredentialsSelectorRecord {
-  [key: string]: [{ value?: string | null | boolean | number; text?: string; disabled?: boolean }];
-  elaw: [{ value?: string | null | boolean | number; text?: string; disabled?: boolean }];
-  projudi: [{ value?: string | null | boolean | number; text?: string; disabled?: boolean }];
-  esaj: [{ value?: string | null | boolean | number; text?: string; disabled?: boolean }];
+  [key: string]: selectCredentialsRefType;
+  elaw: selectCredentialsRefType;
+  projudi: selectCredentialsRefType;
+  esaj: selectCredentialsRefType;
 }
 
 export type {
@@ -56,4 +60,5 @@ export type {
   ExecutionData,
   ResponseCredentials,
   ResponseData,
+  selectCredentialsRefType,
 };

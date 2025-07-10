@@ -1,17 +1,12 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import formSetup from "@/setup/formbot/scripts/formSetup";
 
-const selected = ref(null);
-
-const stateOptions = ref([
-  { value: null, text: "Selecione um estado", disabled: true },
-  { value: "AM", text: "Amazonas" },
-]);
+const { form, stateOptions } = formSetup();
 </script>
 
 <template>
   <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
     <label class="form-label">Selecione o Estado</label>
-    <BFormSelect v-model="selected" :options="stateOptions" />
+    <BFormSelect v-model="form.state" :options="stateOptions" />
   </div>
 </template>

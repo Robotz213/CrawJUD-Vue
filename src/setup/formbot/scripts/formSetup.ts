@@ -7,8 +7,28 @@ import refsSetup from "./refsSetup";
 
 export default function () {
   const router = useRouter();
-  const { overlayFormSubmit, bot, form, EnabledInputs, courtOptions, queryCourt } = refsSetup();
-  mountSetup(router, bot, EnabledInputs, courtOptions);
+  const {
+    overlayFormSubmit,
+    bot,
+    form,
+    EnabledInputs,
+    courtOptions,
+    queryCourt,
+    credentialsSelector,
+    message,
+    selectCredentialsRef,
+    stateOptions,
+  } = refsSetup();
+
+  mountSetup(
+    router,
+    bot,
+    EnabledInputs,
+    courtOptions,
+    credentialsSelector,
+    message,
+    selectCredentialsRef,
+  );
 
   const queryCourtOptionsCourt = computed(() => {
     return Array.from(courtOptions.value).filter((item) => {
@@ -48,6 +68,7 @@ export default function () {
   } = componentsSetup();
 
   return {
+    selectCredentialsRef,
     handleSubmit,
     EnabledInputs,
     CourtInputView,
@@ -71,5 +92,6 @@ export default function () {
     queryCourtOptionsCourt,
     courtOptions,
     varas,
+    stateOptions,
   };
 }

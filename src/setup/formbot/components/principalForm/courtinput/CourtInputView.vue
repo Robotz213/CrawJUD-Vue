@@ -22,6 +22,7 @@ const { form, queryCourt, queryCourtOptionsCourt } = formSetup();
       :options="queryCourtOptionsCourt"
       :select-size="7"
       :multiple="true"
+      :required="true"
     />
   </div>
 </template>

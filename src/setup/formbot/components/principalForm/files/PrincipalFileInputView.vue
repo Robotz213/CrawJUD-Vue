@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { storeBot } from "@/stores/bot";
-import { storeToRefs } from "pinia";
+import formSetup from "@/setup/formbot/scripts/formSetup";
 
-const { form } = storeToRefs(storeBot());
+const { form } = formSetup();
 </script>
 
 <template>
@@ -16,7 +15,7 @@ const { form } = storeToRefs(storeBot());
       id="xlsx"
       name="xlsx"
       type="file"
-      :required="false"
+      :required="true"
       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     />
   </div>
