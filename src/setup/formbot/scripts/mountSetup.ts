@@ -1,4 +1,4 @@
-import type { BotRecord, CredentialsSelectorRecord, selectCredentialsRefType } from "@/types";
+import type { BotRecord } from "@/types";
 import type {
   Classification,
   FormConfig,
@@ -19,9 +19,6 @@ export default function (
   bot: Ref<BotRecord | null>,
   EnabledInputs: Reactive<TypeEnabledInputs>,
   courtOptions: Ref<selectCourts[]>,
-  credentialsSelector: Ref<CredentialsSelectorRecord | null>,
-  message: Ref<string>,
-  selectCredentialsRef: Ref<selectCredentialsRefType>,
 ) {
   onMounted(() => {
     if (bot.value === null) {
@@ -80,19 +77,5 @@ export default function (
       courts.push({ value: key, text: value, id: index });
     });
     courtOptions.value.push(...courts);
-  });
-
-  onBeforeMount(() => {
-    if (!credentialsSelector.value || !bot.value) return;
-
-    selectCredentialsRef.value = credentialsSelector.value[bot.value?.system.toLowerCase()];
-
-    if (
-      Array.isArray(selectCredentialsRef.value) &&
-      (selectCredentialsRef.value as unknown[]).length === 0
-    ) {
-      message.value = "É necessário cadastrar uma credencial!";
-      router.push({ name: "bots" });
-    }
   });
 }

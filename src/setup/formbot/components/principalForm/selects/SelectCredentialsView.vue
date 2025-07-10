@@ -1,7 +1,24 @@
 <script setup lang="ts">
 import formSetup from "@/setup/formbot/scripts/formSetup";
+import { onBeforeMount } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const { form, selectCredentialsRef, message, bot, credentialsSelector } = formSetup();
 
-const { form, selectCredentialsRef } = formSetup();
+onBeforeMount(() => {
+  if (!credentialsSelector.value || !bot.value) return;
+
+  const creds = credentialsSelector.value;
+  selectCredentialsRef.value = creds[bot.value?.system.toLowerCase()];
+
+  if (
+    Array.isArray(selectCredentialsRef.value) &&
+    (selectCredentialsRef.value as unknown[]).length === 0
+  ) {
+    message.value = "É necessário cadastrar uma credencial!";
+    router.push({ name: "bots" });
+  }
+});
 </script>
 
 <template>

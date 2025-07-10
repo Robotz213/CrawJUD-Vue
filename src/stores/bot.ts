@@ -12,6 +12,7 @@ const storeBot = defineStore("bot", () => {
   const { getDate } = setupData();
   const dateTime = getDate();
   const form = reactive<TypeFormBot>({
+    bot_id: null,
     xlsx: null,
     creds: null,
     parte_name: null,

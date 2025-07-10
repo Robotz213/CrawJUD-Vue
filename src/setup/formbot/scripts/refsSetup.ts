@@ -4,7 +4,7 @@ import { useMessageStore } from "@/stores/message";
 import type { selectCredentialsRefType } from "@/types";
 import type { selectCourts, TypeEnabledInputs } from "@/types/form_types";
 import { storeToRefs } from "pinia";
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 
 export default function () {
   const selected = ref(null);
@@ -30,12 +30,24 @@ export default function () {
     confirm_fields: false,
     periodic_task: false,
   });
+
+  const queryCourtOptionsCourt = computed(() => {
+    return Array.from(courtOptions.value).filter((item) => {
+      if (item.text.toLowerCase().includes(queryCourt.value.toLowerCase())) {
+        return true;
+      }
+
+      return false;
+    });
+  });
+
   const stateOptions = ref([
     { value: null, text: "Selecione um estado", disabled: true },
     { value: "AM", text: "Amazonas" },
   ]);
 
   return {
+    queryCourtOptionsCourt,
     stateOptions,
     message,
     selected,

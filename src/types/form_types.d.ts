@@ -39,6 +39,7 @@ interface TypeEnabledInputs {
 }
 
 interface TypeFormBot {
+  bot_id: string | number | null;
   xlsx: File | File[] | null;
   creds: string | null;
   parte_name: string | null;

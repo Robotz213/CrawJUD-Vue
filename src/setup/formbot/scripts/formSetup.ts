@@ -1,4 +1,4 @@
-import { computed } from "vue";
+import { api } from "@/controllers/axios";
 import { useRouter } from "vue-router";
 import varas from "../json/varas.json";
 import componentsSetup from "./componentsSetup";
@@ -8,6 +8,7 @@ import refsSetup from "./refsSetup";
 export default function () {
   const router = useRouter();
   const {
+    queryCourtOptionsCourt,
     overlayFormSubmit,
     bot,
     form,
@@ -19,37 +20,6 @@ export default function () {
     selectCredentialsRef,
     stateOptions,
   } = refsSetup();
-
-  mountSetup(
-    router,
-    bot,
-    EnabledInputs,
-    courtOptions,
-    credentialsSelector,
-    message,
-    selectCredentialsRef,
-  );
-
-  const queryCourtOptionsCourt = computed(() => {
-    return Array.from(courtOptions.value).filter((item) => {
-      if (item.text.toLowerCase().includes(queryCourt.value.toLowerCase())) {
-        return true;
-      }
-
-      return false;
-    });
-  });
-
-  async function handleSubmit(e: Event) {
-    e.preventDefault();
-
-    overlayFormSubmit.value = true;
-
-    setTimeout(() => {
-      overlayFormSubmit.value = false;
-    }, 2000);
-  }
-
   const {
     CourtInputView,
     ClasseParteSelectView,
@@ -67,7 +37,41 @@ export default function () {
     ScheduleTaskFormView,
   } = componentsSetup();
 
+  mountSetup(router, bot, EnabledInputs, courtOptions);
+
+  async function handleSubmit(e: Event) {
+    if (!bot.value?.id) return;
+    e.preventDefault();
+
+    overlayFormSubmit.value = true;
+
+    form.value.bot_id = bot.value.id;
+    let msg = "Erro ao Iniciar o robô";
+    let isStarted = false;
+    try {
+      const response = await api.post("/bot/start_bot", form.value, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data.message) {
+        isStarted = true;
+        msg = response.data.message;
+      }
+    } catch {
+      //
+    }
+
+    overlayFormSubmit.value = false;
+    message.value = msg;
+    if (isStarted) {
+      //
+    }
+  }
   return {
+    message,
+    credentialsSelector,
     selectCredentialsRef,
     handleSubmit,
     EnabledInputs,
