@@ -26,6 +26,7 @@ declare module 'vue' {
     BNavItemDropdown: typeof import('bootstrap-vue-next/components/BNav')['BNavItemDropdown']
     BOffcanvas: typeof import('bootstrap-vue-next/components/BOffcanvas')['BOffcanvas']
     BOverlay: typeof import('bootstrap-vue-next/components/BOverlay')['BOverlay']
+    BProgress: typeof import('bootstrap-vue-next/components/BProgress')['BProgress']
     BTooltip: typeof import('bootstrap-vue-next/components/BTooltip')['BTooltip']
     FooterView: typeof import('./src/components/FooterView.vue')['default']
     IBiHome: typeof import('~icons/bi/home')['default']

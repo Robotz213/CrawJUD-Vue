@@ -5,7 +5,7 @@ const { form } = formSetup();
 </script>
 
 <template>
-  <div class="col-md-10 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
+  <div class="col-md-12 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
     <BFormFile
       v-model="form.xlsx"
       label="Arquivo de execução"

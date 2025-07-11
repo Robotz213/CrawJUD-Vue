@@ -7,6 +7,7 @@ import { storeToRefs } from "pinia";
 import { computed, reactive, ref } from "vue";
 
 export default function () {
+  const progressBar = ref(0);
   const selected = ref(null);
   const queryCourt = ref("");
   const courtOptions = ref<selectCourts[]>([]);
@@ -47,6 +48,7 @@ export default function () {
   ]);
 
   return {
+    progressBar,
     queryCourtOptionsCourt,
     stateOptions,
     message,

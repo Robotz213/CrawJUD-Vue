@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { BOverlay } from "bootstrap-vue-next";
-import { computed, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 import { FileSocket } from "@/main";
 import formSetup from "@/setup/formbot/scripts/formSetup";
 
+const uploadingFile = ref(false);
+
 const {
+  progressBar,
   overlayFormSubmit,
   form,
   bot,
@@ -30,23 +33,46 @@ const {
 watch(
   () => form.value.xlsx,
   async (newFiles: File | File[] | string | null) => {
+    uploadingFile.value = true;
+
     if (newFiles && typeof newFiles !== "string") {
       const files = Array.isArray(newFiles) ? newFiles : [newFiles];
-      console.log(files);
-      for (const file of files) {
+      const valorTotal = files.length;
+
+      for (let i = 0; i < files.length; i++) {
+        progressBar.value = 0.1;
+        const file = files[i];
         const filename = file.name;
-        FileSocket.emit("add_file", {
-          file: {
-            name: filename,
-            content_type: file.type,
-            file: await file.arrayBuffer(),
-            content_length: file.size,
-          },
-        });
+        setTimeout(async () => {
+          FileSocket.emit(
+            "add_file",
+            {
+              file: {
+                name: filename,
+                content_type: file.type,
+                file: await file.arrayBuffer(),
+                content_length: file.size,
+              },
+            },
+            () => {
+              setTimeout(() => {
+                progressBar.value = Math.round((i + 1 / valorTotal) * 100);
+              }, 1000);
+            },
+          );
+        }, 200);
       }
     }
   },
 );
+
+watch(progressBar, (newValue) => {
+  if (newValue === 100) {
+    setTimeout(() => {
+      progressBar.value = 0;
+    }, 750);
+  }
+});
 
 const tarefaAgendada = computed(() => form.value.periodic_task);
 </script>
@@ -63,8 +89,15 @@ const tarefaAgendada = computed(() => form.value.periodic_task);
             <ClasseParteSelectView v-if="EnabledInputs.polo_parte" />
             <DataInicioView v-if="EnabledInputs.data_inicio" />
             <DataFimView v-if="EnabledInputs.data_fim" />
-            <PrincipalFileInputView v-if="EnabledInputs.xlsx" />
-            <AnotherFilesInputView v-if="EnabledInputs.otherfiles" />
+            <div class="row col-10 rounded rounded-4 border border-4 p-2">
+              <PrincipalFileInputView v-if="EnabledInputs.xlsx" />
+              <AnotherFilesInputView v-if="EnabledInputs.otherfiles" />
+              <Transition name="fade" mode="out-in">
+                <div v-if="progressBar > 0" class="col-md-12">
+                  <BProgress :value="progressBar" />
+                </div>
+              </Transition>
+            </div>
             <CourtInputView v-if="EnabledInputs.varas" />
             <SelectCredentialsView v-if="EnabledInputs.creds" />
             <SelectStateView v-if="EnabledInputs.state" />
@@ -77,21 +110,22 @@ const tarefaAgendada = computed(() => form.value.periodic_task);
           </div>
         </div>
         <div class="card-footer d-grid gap-2">
-          <input
+          <button
+            :disabled="uploadingFile"
             class="btn btn btn-outline-success btn-login fw-semibold"
             id="submit"
             name="submit"
             type="submit"
-            value="Iniciar Execução"
-          />
-
-          <a
+          >
+            Iniciar Execução
+          </button>
+          <!-- <a
             disabled
             class="btn btn-outline-primary fw-semibold"
             href="/get_model/1/projudi/capa/projudi_capa"
           >
             Gerar Modelo
-          </a>
+          </a> -->
         </div>
       </form>
     </BOverlay>

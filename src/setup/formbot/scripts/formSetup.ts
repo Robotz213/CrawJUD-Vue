@@ -8,6 +8,7 @@ import refsSetup from "./refsSetup";
 export default function () {
   const router = useRouter();
   const {
+    progressBar,
     queryCourtOptionsCourt,
     overlayFormSubmit,
     bot,
@@ -70,6 +71,7 @@ export default function () {
     }
   }
   return {
+    progressBar,
     message,
     credentialsSelector,
     selectCredentialsRef,
