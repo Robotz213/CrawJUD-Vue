@@ -5,6 +5,11 @@ import componentsSetup from "./componentsSetup";
 import mountSetup from "./mountSetup";
 import refsSetup from "./refsSetup";
 
+type TratamentoArquivosParams = {
+  xlsx?: File | File[] | string;
+  otherfiles?: File | File[] | string;
+};
+
 export default function () {
   const router = useRouter();
   const {
@@ -50,6 +55,20 @@ export default function () {
     let msg = "Erro ao Iniciar o robô";
     let isStarted = false;
     try {
+      if (EnabledInputs.xlsx) {
+        await TratamentoArquivos({
+          xlsx: form.value.xlsx as File,
+          otherfiles: form.value.otherfiles as File[],
+        });
+      }
+
+      const Form_Record = Object.fromEntries(
+        Object.entries(form.value).filter(([_, value]) => value !== null),
+      );
+
+      console.log(Form_Record);
+      overlayFormSubmit.value = false;
+
       const response = await api.post("/bot/start_bot", form.value, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -68,6 +87,25 @@ export default function () {
     message.value = msg;
     if (isStarted) {
       //
+    }
+  }
+
+  async function TratamentoArquivos(params: TratamentoArquivosParams) {
+    const { xlsx, otherfiles } = params;
+
+    const fileListXlsx = Array.isArray(xlsx) ? (xlsx as File[]) : [xlsx as File];
+    for (const f of fileListXlsx) {
+      const file = f as File;
+      form.value.xlsx = file.name;
+    }
+    if (otherfiles) {
+      const newFileList = [];
+      const otherFilesList = Array.isArray(otherfiles) ? otherfiles : [otherfiles];
+      for (const f of otherFilesList) {
+        const file = f as File;
+        newFileList.push(file.name);
+      }
+      form.value.otherfiles = newFileList;
     }
   }
   return {

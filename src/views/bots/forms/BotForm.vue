@@ -6,7 +6,8 @@ import { FileSocket } from "@/main";
 import formSetup from "@/setup/formbot/scripts/formSetup";
 
 const uploadingFile = ref(false);
-
+const currentPos = ref(0);
+const valorTotal = ref(0);
 const {
   progressBar,
   overlayFormSubmit,
@@ -30,46 +31,66 @@ const {
   ScheduleTaskFormView,
 } = formSetup();
 
+async function uploadFiles(files: File[]) {
+  valorTotal.value = files.length;
+  progressBar.value = 0.1;
+  for (let i = 0; i < files.length; i++) {
+    setTimeout(async () => {
+      const file = files[i];
+      const filename = file.name;
+      FileSocket.emit(
+        "add_file",
+        {
+          file: {
+            name: filename,
+            content_type: file.type,
+            file: await file.arrayBuffer(),
+            content_length: file.size,
+          },
+        },
+        () => {
+          setTimeout(() => {
+            currentPos.value += 1;
+          }, 1500);
+        },
+      );
+    }, 1500);
+  }
+}
+
+watch(currentPos, (newValue) => {
+  progressBar.value = Math.round((newValue / valorTotal.value) * 100);
+});
+
 watch(
   () => form.value.xlsx,
   async (newFiles: File | File[] | string | null) => {
     uploadingFile.value = true;
 
     if (newFiles && typeof newFiles !== "string") {
-      const files = Array.isArray(newFiles) ? newFiles : [newFiles];
-      const valorTotal = files.length;
+      await uploadFiles(Array.isArray(newFiles) ? newFiles : [newFiles]);
+    }
+  },
+);
 
-      for (let i = 0; i < files.length; i++) {
-        progressBar.value = 0.1;
-        const file = files[i];
-        const filename = file.name;
-        setTimeout(async () => {
-          FileSocket.emit(
-            "add_file",
-            {
-              file: {
-                name: filename,
-                content_type: file.type,
-                file: await file.arrayBuffer(),
-                content_length: file.size,
-              },
-            },
-            () => {
-              setTimeout(() => {
-                progressBar.value = Math.round((i + 1 / valorTotal) * 100);
-              }, 1000);
-            },
-          );
-        }, 200);
-      }
+watch(
+  () => form.value.otherfiles,
+  async (newFiles: File | File[] | string | string[] | null) => {
+    uploadingFile.value = true;
+
+    if (newFiles && typeof newFiles !== "string") {
+      await uploadFiles(Array.isArray(newFiles) ? (newFiles as File[]) : [newFiles]);
     }
   },
 );
 
 watch(progressBar, (newValue) => {
-  if (newValue === 100) {
+  if (newValue >= 99) {
     setTimeout(() => {
       progressBar.value = 0;
+      uploadingFile.value = false;
+      valorTotal.value = 0;
+      currentPos.value = 0;
     }, 750);
   }
 });
@@ -113,22 +134,26 @@ const tarefaAgendada = computed(() => form.value.periodic_task);
           </div>
         </div>
         <div class="card-footer d-grid gap-2">
-          <button
-            :disabled="uploadingFile"
-            class="btn btn btn-outline-success btn-login fw-semibold"
-            id="submit"
-            name="submit"
-            type="submit"
-          >
-            Iniciar Execução
-          </button>
-          <!-- <a
+          <Transition name="fade" mode="out-in" :duration="500">
+            <div v-if="form.confirm_fields" class="d-grid">
+              <button
+                :disabled="uploadingFile || !(EnabledInputs.xlsx || EnabledInputs.otherfiles)"
+                class="btn btn btn-outline-success btn-login fw-semibold"
+                id="submit"
+                name="submit"
+                type="submit"
+              >
+                Iniciar Execução
+              </button>
+            </div>
+          </Transition>
+          <a
             disabled
             class="btn btn-outline-primary fw-semibold"
             href="/get_model/1/projudi/capa/projudi_capa"
           >
             Gerar Modelo
-          </a> -->
+          </a>
         </div>
       </form>
     </BOverlay>

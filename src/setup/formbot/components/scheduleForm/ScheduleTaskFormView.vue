@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeBot } from "@/stores/bot";
 import { storeToRefs } from "pinia";
+import { ref, watch } from "vue";
 import SelectButtonsView from "./SelectButtonsView.vue";
 
 const { form } = storeToRefs(storeBot());
@@ -13,6 +14,12 @@ const elements = [
   { id: "item-5", name: "fri", label: "Sexta", value: null },
   { id: "item-6", name: "sat", label: "Sábado", value: null },
 ];
+
+const taskDays = ref<string[]>([]);
+
+watch(taskDays, (newValues) => {
+  form.value.days_task = newValues;
+});
 </script>
 
 <template>
@@ -44,7 +51,7 @@ const elements = [
         <label class="form-label" for="periodic_task_group-0-days">Dias de execução</label>
       </span>
       <hr />
-      <SelectButtonsView v-bind:elements="elements" v-model="form.days_task" />
+      <SelectButtonsView v-bind:elements="elements" v-model="taskDays" />
     </div>
     <div class="col-md-12 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
       <label class="form-label" for="periodic_task_group-0-email_notify">

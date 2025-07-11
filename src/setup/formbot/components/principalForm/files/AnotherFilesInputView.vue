@@ -7,7 +7,7 @@ const { form } = formSetup();
 <template>
   <div class="col-md-12 mb-3 border border-secondary p-2 border-2 rounded bg-body-tertiary">
     <BFormFile
-      v-model="form.otherfiles"
+      v-model="form.otherfiles as File"
       label="Arquivo Adicionais"
       label-class="form-label"
       class="form-control"

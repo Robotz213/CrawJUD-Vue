@@ -15,7 +15,6 @@ const { form } = storeToRefs(storeBot());
         role="switch"
         type="checkbox"
         v-model="form.periodic_task"
-        :value="false"
       />
       <label class="form-check-label" for="periodic_task"
         >Execução periódica (experimental).

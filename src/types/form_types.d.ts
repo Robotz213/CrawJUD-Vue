@@ -40,7 +40,7 @@ interface TypeEnabledInputs {
 
 interface TypeFormBot {
   bot_id: string | number | null;
-  xlsx: File | File[] | null;
+  xlsx: File | File[] | string | null;
   creds: string | null;
   parte_name: string | null;
   doc_parte: string | null;
@@ -50,10 +50,10 @@ interface TypeFormBot {
   state: string | null;
   varas: string[] | null;
   client: string | null;
-  otherfiles: File | File[] | null;
-  confirm_fields: boolean;
-  periodic_task: boolean;
-  days_task: string[];
+  otherfiles: File | File[] | string | string[] | null;
+  confirm_fields: boolean | null;
+  periodic_task: boolean | null;
+  days_task: string[] | null;
   task_hour_minute: Date | string | null;
   task_name: string | null;
   email_notify: string | null;
