@@ -15,7 +15,13 @@ export default function () {
   const { bot, form } = storeToRefs(storeBot());
   const { credentialsSelector } = storeToRefs(useCredentialsStore());
   const { message } = storeToRefs(useMessageStore());
-  const selectCredentialsRef = ref<selectCredentialsRefType>([{}]);
+  const selectCredentialsRef = ref<selectCredentialsRefType>([
+    {
+      value: null,
+      text: "CARREGANDO",
+      disabled: true,
+    },
+  ]);
   const EnabledInputs = reactive<TypeEnabledInputs>({
     xlsx: false,
     creds: false,

@@ -46,36 +46,25 @@ export default function (
   });
   onBeforeMount(() => {
     if (!(bot.value?.system || bot.value?.state)) return;
-    const varasRecord = varas as unknown as JsonVaras;
-    const courts: selectCourts[] = [];
+    if (bot.value.state.toLowerCase() !== "EVERYONE".toLowerCase()) {
+      const varasRecord = varas as unknown as JsonVaras;
+      const courts: selectCourts[] = [];
 
-    const system = bot.value?.system.toUpperCase() as unknown as keySystems;
-    const state = bot.value?.state.toUpperCase() as unknown as keyStates;
-    const courtsJson = varasRecord[system][state];
+      const system = bot.value?.system.toUpperCase() as unknown as keySystems;
+      const state = bot.value?.state.toUpperCase() as unknown as keyStates;
 
-    Object.entries(courtsJson).map(([key, value], index) => {
-      courts.push({ value: key, text: value, id: index });
-    });
-    courtOptions.value.push(...courts);
+      const courtsJson = varasRecord[system][state];
+
+      Object.entries(courtsJson).map(([key, value], index) => {
+        courts.push({ value: key, text: value, id: index });
+      });
+      courtOptions.value.push(...courts);
+    }
   });
   onUnmounted(() => {
     Object.entries(EnabledInputs).forEach(([key]) => {
       EnabledInputs[key] = false;
     });
-  });
-
-  onBeforeMount(() => {
-    if (!(bot.value?.system || bot.value?.state)) return;
-    const varasRecord = varas as unknown as JsonVaras;
-    const courts: selectCourts[] = [];
-
-    const system = bot.value?.system.toUpperCase() as unknown as keySystems;
-    const state = bot.value?.state.toUpperCase() as unknown as keyStates;
-    const courtsJson = varasRecord[system][state];
-
-    Object.entries(courtsJson).map(([key, value], index) => {
-      courts.push({ value: key, text: value, id: index });
-    });
-    courtOptions.value.push(...courts);
+    bot.value = null;
   });
 }

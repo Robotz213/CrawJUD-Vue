@@ -89,7 +89,10 @@ const tarefaAgendada = computed(() => form.value.periodic_task);
             <ClasseParteSelectView v-if="EnabledInputs.polo_parte" />
             <DataInicioView v-if="EnabledInputs.data_inicio" />
             <DataFimView v-if="EnabledInputs.data_fim" />
-            <div class="row col-10 rounded rounded-4 border border-4 p-2">
+            <div
+              v-if="EnabledInputs.xlsx || EnabledInputs.otherfiles"
+              class="row col-10 rounded rounded-4 border border-4 p-2"
+            >
               <PrincipalFileInputView v-if="EnabledInputs.xlsx" />
               <AnotherFilesInputView v-if="EnabledInputs.otherfiles" />
               <Transition name="fade" mode="out-in">
