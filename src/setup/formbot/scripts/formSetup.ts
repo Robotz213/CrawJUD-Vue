@@ -62,12 +62,9 @@ export default function () {
         });
       }
 
-      const Form_Record = Object.fromEntries(
-        Object.entries(form.value).filter(([_, value]) => value !== null),
-      );
-
-      console.log(Form_Record);
-      overlayFormSubmit.value = false;
+      // const Form_Record = Object.fromEntries(
+      //   Object.entries(form.value).filter(([_, value]) => value !== null),
+      // );
 
       const response = await api.post("/bot/start_bot", form.value, {
         headers: {
@@ -86,7 +83,6 @@ export default function () {
     overlayFormSubmit.value = false;
     message.value = msg;
     if (isStarted) {
-      //
     }
   }
 
