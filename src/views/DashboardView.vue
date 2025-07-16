@@ -4,14 +4,13 @@ import DataTable from "datatables.net-vue3";
 DataTable.use(DataTablesCore);
 
 import { api } from "@/controllers/axios";
-import type { ResponseData } from "@/types";
 import { onBeforeMount, ref } from "vue";
 
 const data = ref<string[][]>([]);
 
 onBeforeMount(async () => {
   try {
-    const resp: ResponseData = await api.request({ method: "GET", url: "/executions" });
+    const resp: ExecutionsResponse = await api.request({ method: "GET", url: "/executions" });
 
     if (resp.data.data) {
       const execut_data = resp.data.data;
