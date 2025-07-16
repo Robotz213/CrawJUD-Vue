@@ -38,8 +38,6 @@ onUnmounted(() => {
   LogsBotSocket.off("load_cache", get_logs);
   LogsBotSocket.off("log_execution", get_logs);
   LogsBotSocket.disconnect();
-
-  storeLogs.$reset();
 });
 
 function stopBotExecution() {
