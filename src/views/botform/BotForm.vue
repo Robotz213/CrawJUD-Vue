@@ -64,11 +64,12 @@ watch(currentPos, (newValue) => {
 
 watch(
   () => form.value.xlsx,
-  async (newFiles: File | File[] | string | null) => {
+  async (newFiles: FileInputType) => {
     uploadingFile.value = true;
 
+    const files = newFiles as File[];
     if (newFiles && typeof newFiles !== "string") {
-      await uploadFiles(Array.isArray(newFiles) ? newFiles : [newFiles]);
+      await uploadFiles(Array.isArray(files) ? files : [files]);
     }
   },
 );

@@ -41,7 +41,7 @@ const router = createRouter({
       component: () => import("@/views/credentials/form/CredentialsFormView.vue"),
     },
     {
-      path: "/logs/execution/:pid",
+      path: "/logs/exec/:pid",
       name: "logs_execution",
       component: () => import("@/views/logsbot/LogsView.vue"),
     },

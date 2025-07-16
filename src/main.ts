@@ -6,7 +6,6 @@ import { manager } from "@/controllers/socketio";
 import { createBootstrap } from "bootstrap-vue-next";
 import "bootstrap-vue-next/dist/bootstrap-vue-next.css";
 import "bootstrap/dist/css/bootstrap.css";
-
 import { createPinia } from "pinia";
 import { createApp } from "vue";
 import App from "./App.vue";
@@ -16,6 +15,7 @@ const app = createApp(App);
 export const socketBots = manager.socket("/bots");
 export const mainSocket = manager.socket("/main");
 export const FileSocket = manager.socket("/files");
+export const LogsBotSocket = manager.socket("/logsbot");
 export const pinia = createPinia();
 
 app.use(pinia);

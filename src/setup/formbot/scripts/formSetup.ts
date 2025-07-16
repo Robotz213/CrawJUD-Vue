@@ -62,15 +62,17 @@ export default function () {
         });
       }
 
-      const response = await api.post("/bot/start_bot", form.value, {
+      const response: BotStartResponse = await api.post("/bot/start_bot", form.value, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      if (response.data.message) {
+      if (response.data.message && response.data.pid) {
         isStarted = true;
         msg = response.data.message;
+        const pid = response.data.pid;
+        router.push({ name: "logs_execution", params: { pid: pid } });
       }
     } catch {
       //
