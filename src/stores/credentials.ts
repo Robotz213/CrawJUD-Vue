@@ -1,4 +1,3 @@
-import type { CredentialsRecord, CredentialsSelectorRecord } from "@/types";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 

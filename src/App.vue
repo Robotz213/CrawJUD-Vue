@@ -2,7 +2,6 @@
 import { socketBots } from "@/main";
 import { storeBot } from "@/stores/bot";
 import { useCredentialsStore } from "@/stores/credentials";
-import type { BotRecord, CredentialsSelectorRecord } from "@/types";
 import { storeToRefs } from "pinia";
 import { RouterView } from "vue-router";
 import MainFrame from "./components/MainFrame.vue";

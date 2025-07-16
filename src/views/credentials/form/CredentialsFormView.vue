@@ -3,7 +3,6 @@ import { api } from "@/controllers/axios";
 import { socketBots } from "@/main";
 import { useCredentialsStore } from "@/stores/credentials";
 import { useMessageStore } from "@/stores/message";
-import type { CredentialsSelectorRecord } from "@/types";
 import { isAxiosError } from "axios";
 import { storeToRefs } from "pinia";
 import { reactive } from "vue";

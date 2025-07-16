@@ -4,7 +4,6 @@ import logoEsaj from "@/assets/img/esaj2.png";
 import crawjud from "@/assets/img/figure_crawjud.png";
 import logoProjudi from "@/assets/img/projudi.png";
 import { storeBot } from "@/stores/bot";
-import type { BotRecord } from "@/types";
 import { storeToRefs } from "pinia";
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
