@@ -2,43 +2,13 @@
 import { LogsBotSocket } from "@/main";
 import { useStoreLogsBot } from "@/stores/bot/logs";
 import { storeToRefs } from "pinia";
-import { onBeforeMount, onUnmounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+
 import ChartView from "./components/ChartView.vue";
 import LogsCardView from "./components/LogsCardView.vue";
 
 const storeLogs = useStoreLogsBot();
 
-const { listLogs, totalSuccess, totalErrors, totalLogs, remainingLogs, current_pid, contentRef } =
-  storeToRefs(storeLogs);
-const route = useRoute();
-const router = useRouter();
-
-function get_logs(logsData: LogsBotRecord) {
-  listLogs.value.push(logsData);
-  totalSuccess.value = logsData.success;
-  totalErrors.value = logsData.errors;
-  totalLogs.value = logsData.total;
-  remainingLogs.value = logsData.remaining;
-}
-
-LogsBotSocket.on("load_cache", get_logs);
-LogsBotSocket.on("log_execution", get_logs);
-
-onBeforeMount(() => {
-  if (!route.params.pid) {
-    router.push({ name: "bots" });
-  }
-  current_pid.value = route.params.pid as string;
-  LogsBotSocket.connect();
-  LogsBotSocket.emit("join_room", { data: { room: current_pid.value } });
-});
-
-onUnmounted(() => {
-  LogsBotSocket.off("load_cache", get_logs);
-  LogsBotSocket.off("log_execution", get_logs);
-  LogsBotSocket.disconnect();
-});
+const { current_pid, contentRef } = storeToRefs(storeLogs);
 
 function stopBotExecution() {
   LogsBotSocket.emit("stop_signal", { data: { pid: current_pid.value } });
