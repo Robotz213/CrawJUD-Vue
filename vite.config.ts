@@ -9,6 +9,11 @@ import { defineConfig } from "vite";
 import vueDevTools from "vite-plugin-vue-devtools";
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/",
+  build: {
+    sourcemap: true,
+    outDir: "./dist",
+  },
   plugins: [
     vue(),
     vueJsx(),
