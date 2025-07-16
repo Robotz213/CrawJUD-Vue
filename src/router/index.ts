@@ -28,7 +28,7 @@ const router = createRouter({
     {
       path: "/bot/:bot_id/:bot_system/:bot_type",
       name: "bot_form",
-      component: () => import("@/views/bots/forms/BotForm.vue"),
+      component: () => import("@/views/botform/BotForm.vue"),
     },
     {
       path: "/credentials",
@@ -39,6 +39,11 @@ const router = createRouter({
       path: "/credentials/new",
       name: "newCredential",
       component: () => import("@/views/credentials/form/CredentialsFormView.vue"),
+    },
+    {
+      path: "/logs/execution/:pid",
+      name: "logs_execution",
+      component: () => import("@/views/logsbot/LogsView.vue"),
     },
   ],
 });
