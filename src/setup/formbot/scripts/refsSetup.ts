@@ -1,8 +1,6 @@
 import { storeBot } from "@/stores/bot";
 import { useCredentialsStore } from "@/stores/credentials";
 import { useMessageStore } from "@/stores/message";
-import type { selectCredentialsRefType } from "@/types";
-import type { selectCourts, TypeEnabledInputs } from "@/types/form_types";
 import { storeToRefs } from "pinia";
 import { computed, reactive, ref } from "vue";
 
@@ -15,7 +13,7 @@ export default function () {
   const { bot, form } = storeToRefs(storeBot());
   const { credentialsSelector } = storeToRefs(useCredentialsStore());
   const { message } = storeToRefs(useMessageStore());
-  const selectCredentialsRef = ref<selectCredentialsRefType>([
+  const selectCredentialsRef = ref<SelectCredentialsRefType>([
     {
       value: null,
       text: "CARREGANDO",

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { socketBots } from "@/main";
 import formSetup from "@/setup/formbot/scripts/formSetup";
-import type { CredentialsSelectorRecord } from "@/types";
 import { onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
