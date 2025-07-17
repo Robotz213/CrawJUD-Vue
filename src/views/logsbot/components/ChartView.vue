@@ -36,7 +36,7 @@ const computedData = computed(() => [remainingLogs.value, totalSuccess.value, to
         </div>
       </div>
     </div>
-    <div class="card-body">
+    <div class="card-body" style="min-height: 400px">
       <CardContent :SizeCard="SizeCard" :MinSizeCard="MinSizeCard">
         <Doughnut
           :options="{ responsive: true }"
