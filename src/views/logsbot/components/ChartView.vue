@@ -1,50 +1,27 @@
 <script setup lang="ts">
 import { useStoreLogsBot } from "@/stores/bot/logs";
-import { Chart } from "chart.js/auto";
+import {
+  ArcElement,
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  Title,
+  Tooltip,
+} from "chart.js";
 import { storeToRefs } from "pinia";
-import { onMounted, ref, watch } from "vue";
+import { computed } from "vue";
+import { Doughnut } from "vue-chartjs";
 import MaterialSymbolsPieChartOutline from "~icons/material-symbols/pie-chart-outline?width=24px&height=24px";
 import setupLogsExec from "./setupLogsExec";
-const { remainingLogs, totalSuccess, totalErrors, totalLogs } = storeToRefs(useStoreLogsBot());
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement);
+
+const { remainingLogs, totalSuccess, totalErrors } = storeToRefs(useStoreLogsBot());
 const { CardContent, SizeCard, MinSizeCard } = setupLogsExec();
 
-const chart = ref<HTMLCanvasElement>();
-
-const chartJS = ref<Chart>();
-
-onMounted(() => {
-  if (chart.value) {
-    const ctx = chart.value.getContext("2d");
-    if (ctx) {
-      chartJS.value = new Chart(ctx, {
-        type: "doughnut",
-        data: {
-          labels: ["RESTANTES", "SUCESSOS", "ERROS"],
-          datasets: [
-            {
-              data: [remainingLogs.value, totalSuccess.value, totalErrors.value],
-              backgroundColor: ["#0096C7", "#42cf06", "#FF0000"],
-            },
-          ],
-        },
-      });
-    }
-  }
-});
-
-watch(totalLogs, () => {
-  console.log(remainingLogs.value, totalLogs.value);
-  try {
-    if (chartJS.value && chartJS.value?.data && chartJS.value?.data.datasets) {
-      chartJS.value.data.datasets[0].data = [
-        remainingLogs.value,
-        totalSuccess.value,
-        totalErrors.value,
-      ];
-      chartJS.value.update();
-    }
-  } catch {}
-});
+const computedData = computed(() => [remainingLogs.value, totalSuccess.value, totalErrors.value]);
 </script>
 
 <template>
@@ -61,7 +38,18 @@ watch(totalLogs, () => {
     </div>
     <div class="card-body">
       <CardContent :SizeCard="SizeCard" :MinSizeCard="MinSizeCard">
-        <canvas ref="chart" id="LogsBotChart" class=""></canvas>
+        <Doughnut
+          :options="{ responsive: true }"
+          :data="{
+            labels: ['RESTANTES', 'SUCESSOS', 'ERROS'],
+            datasets: [
+              {
+                data: computedData,
+                backgroundColor: ['#0096C7', '#42cf06', '#FF0000'],
+              },
+            ],
+          }"
+        />
       </CardContent>
     </div>
     <div class="card-footer small text-muted fw-semibold">

@@ -21,6 +21,7 @@ function get_logs(logsData: LogsBotRecord) {
   totalErrors.value = logsData.errors;
   totalLogs.value = logsData.total;
   remainingLogs.value = logsData.remaining;
+  status.value = logsData.status;
 }
 
 LogsBotSocket.on("load_cache", get_logs);
