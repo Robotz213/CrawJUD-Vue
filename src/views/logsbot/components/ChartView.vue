@@ -33,15 +33,17 @@ onMounted(() => {
 });
 
 watch(totalLogs, () => {
-  console.log(remainingLogs, totalLogs);
-  if (chartJS.value && chartJS.value?.data && chartJS.value?.data.datasets) {
-    chartJS.value.data.datasets[0].data = [
-      remainingLogs.value,
-      totalSuccess.value,
-      totalErrors.value,
-    ];
-    chartJS.value.update();
-  }
+  console.log(remainingLogs.value, totalLogs.value);
+  try {
+    if (chartJS.value && chartJS.value?.data && chartJS.value?.data.datasets) {
+      chartJS.value.data.datasets[0].data = [
+        remainingLogs.value,
+        totalSuccess.value,
+        totalErrors.value,
+      ];
+      chartJS.value.update();
+    }
+  } catch {}
 });
 </script>
 
