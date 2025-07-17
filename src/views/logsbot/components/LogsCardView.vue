@@ -56,7 +56,11 @@ onUnmounted(() => {
       </div>
     </div>
     <div class="card-body bg-black overflow-auto">
-      <CardContent :SizeCard="SizeCard" :MinSizeCard="MinSizeCard" class="overflow-y-auto">
+      <CardContent
+        :SizeCard="SizeCard"
+        :MinSizeCard="MinSizeCard"
+        class="overflow-y-auto align-items-start"
+      >
         <TransitionGroup tag="ul" name="fade">
           <li v-for="(item, index) in listLogs" :key="index">
             {{ item.message }}

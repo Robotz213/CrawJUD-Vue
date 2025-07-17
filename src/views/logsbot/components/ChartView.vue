@@ -2,18 +2,21 @@
 import { useStoreLogsBot } from "@/stores/bot/logs";
 import { Chart } from "chart.js/auto";
 import { storeToRefs } from "pinia";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import MaterialSymbolsPieChartOutline from "~icons/material-symbols/pie-chart-outline?width=24px&height=24px";
 import setupLogsExec from "./setupLogsExec";
-const { remainingLogs, totalSuccess, totalErrors } = storeToRefs(useStoreLogsBot());
+const { remainingLogs, totalSuccess, totalErrors, totalLogs } = storeToRefs(useStoreLogsBot());
 const { CardContent, SizeCard, MinSizeCard } = setupLogsExec();
 
 const chart = ref<HTMLCanvasElement>();
+
+const chartJS = ref<Chart>();
+
 onMounted(() => {
   if (chart.value) {
     const ctx = chart.value.getContext("2d");
     if (ctx) {
-      new Chart(ctx, {
+      chartJS.value = new Chart(ctx, {
         type: "doughnut",
         data: {
           labels: ["RESTANTES", "SUCESSOS", "ERROS"],
@@ -26,6 +29,18 @@ onMounted(() => {
         },
       });
     }
+  }
+});
+
+watch(totalLogs, () => {
+  console.log(remainingLogs, totalLogs);
+  if (chartJS.value && chartJS.value?.data && chartJS.value?.data.datasets) {
+    chartJS.value.data.datasets[0].data = [
+      remainingLogs.value,
+      totalSuccess.value,
+      totalErrors.value,
+    ];
+    chartJS.value.update();
   }
 });
 </script>
