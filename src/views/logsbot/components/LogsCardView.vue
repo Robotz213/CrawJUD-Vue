@@ -24,7 +24,7 @@ function get_logs(logsData: LogsBotRecord) {
   status.value = logsData.status;
 }
 
-LogsBotSocket.on("load_cache", get_logs);
+LogsBotSocket.emit("load_cache", { data: { pid: route.params.pid } }, get_logs);
 LogsBotSocket.on("log_execution", get_logs);
 
 onBeforeMount(() => {
