@@ -1,12 +1,14 @@
 Especifique o tipo do commit (ex.: `chore`, `refact`, etc.)
 Ao gerar mensagens de commit, o Copilot deve sugerir um título breve, descritivo e no imperativo, indicando resumidamente a principal alteração realizada. No corpo (body) da mensagem de commit, o Copilot deve detalhar separadamente as alterações feitas em cada arquivo modificado, listando o nome do arquivo seguido de uma breve descrição da mudança correspondente. Por exemplo:
 
-```
-✨ feat: enhance card body styling for better layout
+```html
+✨ *<type>(<scope>): <short summary>*
 
-  - `src/views/logsbot/components/ChartView.vue`: Set minimum height for card body to 400px.
-  - `src/views/logsbot/components/LogsCardView.vue`: Set minimum height for card body to 400px and adjust alignment classes.
+<detailed description - what, why, how>
 
+Files Changed:
+- *<path/file1.ext>*: <short summary of what changed>
+- *<path/file2.ext>*: <short summary of what changed>
 ```
 
 O Copilot deve sugerir mensagens automaticamente sempre que alterações forem detectadas, apresentando a sugestão em cinza-claro na caixa de commit. O usuário pode aceitar a sugestão pressionando Tab ou visualizar mais opções pressionando Ctrl+Space. Caso a sugestão não apareça, o Copilot deve permitir que o usuário acione novas sugestões digitando / na caixa de commit.
