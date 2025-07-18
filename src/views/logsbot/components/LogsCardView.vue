@@ -16,6 +16,7 @@ const route = useRoute();
 const router = useRouter();
 
 function get_logs(logsData: LogsBotRecord) {
+  console.log(logsData);
   listLogs.value.push(logsData);
   totalSuccess.value = logsData.success;
   totalErrors.value = logsData.errors;
@@ -63,7 +64,11 @@ onUnmounted(() => {
         class="overflow-y-auto align-items-start justify-content-start"
       >
         <TransitionGroup tag="ul" name="fade">
-          <li v-for="(item, index) in listLogs" :key="index">
+          <li
+            v-for="(item, index) in listLogs"
+            :key="index"
+            @transitionend="$host?.scrollIntoView({ behavior: 'smooth', block: 'end' })"
+          >
             {{ item.message }}
           </li>
         </TransitionGroup>
