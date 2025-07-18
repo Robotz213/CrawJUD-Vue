@@ -33,6 +33,16 @@ router.afterEach((to) => {
   }
 });
 
+/**
+ * Disconnects all active socket connections used in the application.
+ *
+ * This function disconnects the following sockets:
+ * - `mainSocket`: The primary socket connection.
+ * - `socketBots`: The socket connection for bot-related communication.
+ * - `FileSocket`: The socket connection for file operations.
+ *
+ * Use this function to gracefully close all socket connections, for example, when the user logs out or the application is shutting down.
+ */
 export function disconnectSocket() {
   mainSocket.disconnect();
   socketBots.disconnect();
