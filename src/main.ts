@@ -6,7 +6,6 @@ import { manager } from "@/controllers/socketio";
 import { createBootstrap } from "bootstrap-vue-next";
 import "bootstrap-vue-next/dist/bootstrap-vue-next.css";
 import "bootstrap/dist/css/bootstrap.css";
-
 import { createPinia } from "pinia";
 import { createApp } from "vue";
 import App from "./App.vue";
@@ -16,6 +15,7 @@ const app = createApp(App);
 export const socketBots = manager.socket("/bots");
 export const mainSocket = manager.socket("/main");
 export const FileSocket = manager.socket("/files");
+export const LogsBotSocket = manager.socket("/logsbot");
 export const pinia = createPinia();
 
 app.use(pinia);
@@ -33,6 +33,16 @@ router.afterEach((to) => {
   }
 });
 
+/**
+ * Disconnects all active socket connections used in the application.
+ *
+ * This function disconnects the following sockets:
+ * - `mainSocket`: The primary socket connection.
+ * - `socketBots`: The socket connection for bot-related communication.
+ * - `FileSocket`: The socket connection for file operations.
+ *
+ * Use this function to gracefully close all socket connections, for example, when the user logs out or the application is shutting down.
+ */
 export function disconnectSocket() {
   mainSocket.disconnect();
   socketBots.disconnect();

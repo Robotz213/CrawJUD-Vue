@@ -1,5 +1,3 @@
-import type { BotRecord } from "@/types";
-import type { TypeFormBot } from "@/types/form_types";
 import { defineStore } from "pinia";
 import { reactive, ref } from "vue";
 import botListJson from "./botsList.json";

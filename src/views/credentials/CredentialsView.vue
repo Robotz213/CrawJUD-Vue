@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { api } from "@/controllers/axios";
 import { useCredentialsStore } from "@/stores/credentials";
-import type { ResponseCredentials } from "@/types";
 import DataTablesCore from "datatables.net-bs5";
 import DataTable from "datatables.net-vue3";
 import { storeToRefs } from "pinia";

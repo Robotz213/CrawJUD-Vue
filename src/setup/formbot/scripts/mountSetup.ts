@@ -1,14 +1,3 @@
-import type { BotRecord } from "@/types";
-import type {
-  Classification,
-  FormConfig,
-  FormConfigRecord,
-  JsonVaras,
-  keyStates,
-  keySystems,
-  selectCourts,
-  TypeEnabledInputs,
-} from "@/types/form_types";
 import { onBeforeMount, onMounted, onUnmounted, type Reactive, type Ref } from "vue";
 import { type Router } from "vue-router";
 import formConfig from "../json/formconfig.json";
