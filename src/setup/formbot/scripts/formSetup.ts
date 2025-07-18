@@ -75,7 +75,7 @@ export default function () {
         router.push({ name: "logs_execution", params: { pid: pid } });
       }
     } catch {
-      //
+      router.push({ name: "bots" });
     }
 
     overlayFormSubmit.value = false;
