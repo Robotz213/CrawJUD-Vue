@@ -15,7 +15,8 @@
       "varas",
       "creds",
       "periodic_task"
-    ]
+    ],
+    "pje": ["xlsx", "confirm_fields", "periodic_task"]
   },
   "ADMINISTRATIVO": {
     "file_auth": ["xlsx", "creds", "client", "confirm_fields", "periodic_task"],
