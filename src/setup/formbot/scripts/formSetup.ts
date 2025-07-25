@@ -1,4 +1,5 @@
 import { api } from "@/controllers/axios";
+import { isAxiosError } from "axios";
 import { useRouter } from "vue-router";
 import varas from "../json/varas.json";
 import componentsSetup from "./componentsSetup";
@@ -62,22 +63,24 @@ export default function () {
         });
       }
 
-      // const Form_Record = Object.fromEntries(
-      //   Object.entries(form.value).filter(([_, value]) => value !== null),
-      // );
-
-      const response = await api.post("/bot/start_bot", form.value, {
+      const response: BotStartResponse = await api.post("/bot/start_bot", form.value, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      if (response.data.message) {
+      if (response.data.message && response.data.pid) {
         isStarted = true;
         msg = response.data.message;
+        const pid = response.data.pid;
+        router.push({ name: "logs_execution", params: { pid: pid } });
       }
-    } catch {
-      //
+    } catch (err) {
+      if (isAxiosError(err) && err.status) {
+        if (err.status != 500) {
+          router.push({ name: "bots" });
+        }
+      }
     }
 
     overlayFormSubmit.value = false;
