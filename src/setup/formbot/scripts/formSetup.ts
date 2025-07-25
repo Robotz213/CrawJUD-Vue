@@ -1,4 +1,5 @@
 import { api } from "@/controllers/axios";
+import { isAxiosError } from "axios";
 import { useRouter } from "vue-router";
 import varas from "../json/varas.json";
 import componentsSetup from "./componentsSetup";
@@ -74,8 +75,12 @@ export default function () {
         const pid = response.data.pid;
         router.push({ name: "logs_execution", params: { pid: pid } });
       }
-    } catch {
-      router.push({ name: "bots" });
+    } catch (err) {
+      if (isAxiosError(err) && err.status) {
+        if (err.status != 500) {
+          router.push({ name: "bots" });
+        }
+      }
     }
 
     overlayFormSubmit.value = false;
