@@ -44,6 +44,24 @@ onUnmounted(() => {
 
   logsStore.$reset();
 });
+
+/**
+ * Retorna a classe CSS correspondente ao tipo de log.
+ *
+ * @param {LogsBotRecord} item - Objeto de log contendo o tipo.
+ * @returns {string} Classe CSS correspondente ao tipo de log.
+ */
+function getClass(item: LogsBotRecord): string {
+  const classes_css: Record<"success" | "error" | "info" | "warning" | "log", string> = {
+    success: "bg-success",
+    error: "bg-danger",
+    info: "bg-primary",
+    warning: "bg-warning",
+    log: "bg-white",
+  };
+
+  return classes_css[item.type as "success" | "error" | "info" | "warning" | "log"] ?? "";
+}
 </script>
 <template>
   <div class="card fixed-height-card border-0">
@@ -53,7 +71,9 @@ onUnmounted(() => {
           <span class="fw-semibold">
             <MaterialSymbolsPieChartOutline class="me-2" />
           </span>
-          <span class="fw-semibold">Logs Execução {{ current_pid }}</span>
+          <span class="fw-semibold"
+            >Logs Execução {{ current_pid.split("-")[0].toUpperCase() }}</span
+          >
         </div>
       </div>
     </div>
@@ -64,11 +84,7 @@ onUnmounted(() => {
         class="overflow-y-auto align-items-start justify-content-start"
       >
         <TransitionGroup tag="ul" name="fade">
-          <li
-            v-for="(item, index) in listLogs"
-            :key="index"
-            @transitionend="$host?.scrollIntoView({ behavior: 'smooth', block: 'end' })"
-          >
+          <li v-for="(item, index) in listLogs" :key="index" :class="getClass(item)">
             {{ item.message }}
           </li>
         </TransitionGroup>
