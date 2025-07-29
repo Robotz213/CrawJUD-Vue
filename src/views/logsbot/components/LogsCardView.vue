@@ -44,24 +44,6 @@ onUnmounted(() => {
 
   logsStore.$reset();
 });
-
-/**
- * Retorna a classe CSS correspondente ao tipo de log.
- *
- * @param {LogsBotRecord} item - Objeto de log contendo o tipo.
- * @returns {string} Classe CSS correspondente ao tipo de log.
- */
-function getClass(item: LogsBotRecord): string {
-  const classes_css: Record<"success" | "error" | "info" | "warning" | "log", string> = {
-    success: "bg-success",
-    error: "bg-danger",
-    info: "bg-primary",
-    warning: "bg-warning",
-    log: "bg-white",
-  };
-
-  return classes_css[item.type as "success" | "error" | "info" | "warning" | "log"] ?? "";
-}
 </script>
 <template>
   <div class="card fixed-height-card border-0">
@@ -84,7 +66,7 @@ function getClass(item: LogsBotRecord): string {
         class="overflow-y-auto align-items-start justify-content-start"
       >
         <TransitionGroup tag="ul" name="fade">
-          <li v-for="(item, index) in listLogs" :key="index" :class="getClass(item)">
+          <li v-for="(item, index) in listLogs" :key="index" :class="item.type.toLowerCase()">
             {{ item.message }}
           </li>
         </TransitionGroup>
@@ -95,3 +77,30 @@ function getClass(item: LogsBotRecord): string {
     </div>
   </div>
 </template>
+
+<style lang="css" scoped>
+.error {
+  color: #892323;
+  font-weight: bold;
+}
+
+.info {
+  color: #f1cf0b;
+  font-weight: bold;
+}
+
+.warning {
+  color: #ff8400;
+  font-weight: bold;
+}
+
+.success {
+  color: #02b102;
+  font-weight: bold;
+}
+
+.log {
+  color: #d1d0d0;
+  font-weight: bold;
+}
+</style>
