@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { SelectProperties } from "@/types/form_types";
-
 const props = defineProps({
   elements: {
     type: Array as () => SelectProperties[],
