@@ -77,13 +77,8 @@ watch(itemLog, (newvalue) => {
         :MinSizeCard="MinSizeCard"
         class="overflow-y-auto align-items-start justify-content-start"
       >
-        <TransitionGroup tag="ul" name="fade">
-          <li
-            v-for="(item, index) in listLogs"
-            :key="index"
-            :class="item.type.toLowerCase()"
-            ref="itemLog"
-          >
+        <TransitionGroup tag="ul" name="fade" ref="itemLog">
+          <li v-for="(item, index) in listLogs" :key="index" :class="item.type.toLowerCase()">
             {{ item.message }}
           </li>
         </TransitionGroup>
