@@ -9,4 +9,5 @@ interface LogsBotRecord {
   pid: string;
   status: string;
   start_time: string;
+  messages: Record<string, string>[];
 }

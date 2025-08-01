@@ -2,7 +2,7 @@
 import { LogsBotSocket } from "@/main";
 import { useStoreLogsBot } from "@/stores/bot/logs";
 import { storeToRefs } from "pinia";
-import { onBeforeMount, onUnmounted } from "vue";
+import { onBeforeMount, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import MaterialSymbolsPieChartOutline from "~icons/material-symbols/pie-chart-outline?width=24px&height=24px";
 import setupLogsExec from "./setupLogsExec";
@@ -15,9 +15,15 @@ const { listLogs, totalLogs, status, current_pid, totalSuccess, totalErrors, rem
 const route = useRoute();
 const router = useRouter();
 
-function get_logs(logsData: LogsBotRecord) {
+function get_logs(logsData: LogsBotRecord, loadCache: boolean = false) {
   console.log(logsData);
-  listLogs.value.push(logsData);
+
+  if (!loadCache) {
+    listLogs.value.push(logsData);
+  } else if (loadCache) {
+    listLogs.value = logsData.messages as unknown as LogsBotRecord[];
+  }
+
   totalSuccess.value = logsData.success;
   totalErrors.value = logsData.errors;
   totalLogs.value = logsData.total;
@@ -25,7 +31,6 @@ function get_logs(logsData: LogsBotRecord) {
   status.value = logsData.status;
 }
 
-LogsBotSocket.emit("load_cache", { data: { pid: route.params.pid } }, get_logs);
 LogsBotSocket.on("log_execution", get_logs);
 
 onBeforeMount(() => {
@@ -35,6 +40,7 @@ onBeforeMount(() => {
   current_pid.value = route.params.pid as string;
   LogsBotSocket.connect();
   LogsBotSocket.emit("join_room", { data: { room: current_pid.value } });
+  LogsBotSocket.emit("load_cache", { data: { pid: route.params.pid } }, get_logs);
 });
 
 onUnmounted(() => {
@@ -43,6 +49,12 @@ onUnmounted(() => {
   LogsBotSocket.disconnect();
 
   logsStore.$reset();
+});
+
+const itemLog = ref();
+
+watch(itemLog, (newvalue) => {
+  console.log(newvalue);
 });
 </script>
 <template>
@@ -66,7 +78,12 @@ onUnmounted(() => {
         class="overflow-y-auto align-items-start justify-content-start"
       >
         <TransitionGroup tag="ul" name="fade">
-          <li v-for="(item, index) in listLogs" :key="index" :class="item.type.toLowerCase()">
+          <li
+            v-for="(item, index) in listLogs"
+            :key="index"
+            :class="item.type.toLowerCase()"
+            ref="itemLog"
+          >
             {{ item.message }}
           </li>
         </TransitionGroup>

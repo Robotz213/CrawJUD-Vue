@@ -12,7 +12,7 @@ import {
 } from "chart.js";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
-import { Doughnut } from "vue-chartjs";
+import { Bar } from "vue-chartjs";
 import MaterialSymbolsPieChartOutline from "~icons/material-symbols/pie-chart-outline?width=24px&height=24px";
 import setupLogsExec from "./setupLogsExec";
 
@@ -38,10 +38,10 @@ const computedData = computed(() => [remainingLogs.value, totalSuccess.value, to
     </div>
     <div class="card-body" style="min-height: 400px">
       <CardContent :SizeCard="SizeCard" :MinSizeCard="MinSizeCard">
-        <Doughnut
+        <Bar
           :options="{ responsive: true }"
           :data="{
-            labels: ['RESTANTES', 'SUCESSOS', 'ERROS'],
+            labels: ['EXECUTADOS', 'SUCESSOS', 'ERROS'],
             datasets: [
               {
                 data: computedData,
@@ -53,9 +53,9 @@ const computedData = computed(() => [remainingLogs.value, totalSuccess.value, to
       </CardContent>
     </div>
     <div class="card-footer small text-muted fw-semibold">
-      <span id="remaining">Restantes: {{ remainingLogs }}</span> |
-      <span id="success">Sucessos: {{ totalSuccess }}</span> |
-      <span id="errors">Erros: {{ totalErrors }}</span>
+      <span id="remaining">Executados: {{ computedData[0] }}</span> |
+      <span id="success">Sucessos: {{ computedData[1] }}</span> |
+      <span id="errors">Erros: {{ computedData[2] }}</span>
     </div>
   </div>
 </template>
