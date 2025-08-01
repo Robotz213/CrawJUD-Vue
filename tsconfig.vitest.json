@@ -6,6 +6,6 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
     "sourceMap": true,
     "lib": [],
-    "types": ["node", "jsdom", "./src/types"]
+    "types": ["node", "jsdom"]
   }
 }
