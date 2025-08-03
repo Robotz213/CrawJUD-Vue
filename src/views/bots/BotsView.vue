@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import logoElaw from "@/assets/img/elaw.png";
-import logoEsaj from "@/assets/img/esaj2.png";
+import logoElaw from "@/assets/img/logoelaw.png";
+import logoEsaj from "@/assets/img/esaj3.png";
 import crawjud from "@/assets/img/figure_crawjud.png";
-import logoProjudi from "@/assets/img/projudi.png";
+import logoPJE from "@/assets/img/pje2.png";
+import logoProjudi from "@/assets/img/projudilogo.png";
 import { storeBot } from "@/stores/bot";
 import { storeToRefs } from "pinia";
 import { computed, ref } from "vue";
@@ -21,6 +22,7 @@ const imagesSrc: { [key: string]: string } = {
   projudi: logoProjudi,
   esaj: logoEsaj,
   elaw: logoElaw,
+  pje: logoPJE,
 };
 
 function getLogo(system: string) {
@@ -37,6 +39,17 @@ function handleBotSelected(botInfo: BotRecord) {
       bot_type: botInfo.type.toLowerCase(),
     },
   });
+}
+
+const class_logo: { [key: string]: string } = {
+  pje: "card-img-top p-4 img-thumbnail imgBot",
+  esaj: "card-img-top p-4 img-thumbnail imgBot bg-secondary",
+  projudi: "card-img-top p-4 img-thumbnail imgBot",
+  elaw: "card-img-top p-4 img-thumbnail imgBot",
+};
+
+function getClassImgLogo(system: string) {
+  return class_logo[system] || "card-img-top p-4 img-thumbnail imgBot";
 }
 </script>
 
@@ -61,20 +74,35 @@ function handleBotSelected(botInfo: BotRecord) {
           <hr />
         </div>
         <div class="col-md-12">
-          <div class="row g-4">
-            <TransitionGroup name="fade" css>
+          <Transition mode="out-in" name="fade">
+            <div
+              class="row g-4"
+              v-if="filterBots.every((value) => value.display_name === 'CARREGANDO...')"
+            >
+              <BPlaceholderWrapper loading>
+                <template #loading>
+                  <div v-for="(bot, index) in filterBots" :key="index" class="col-md-3 p-4">
+                    <BPlaceholderCard style="min-height: 430px" no-img />
+                  </div>
+                </template>
+              </BPlaceholderWrapper>
+            </div>
+            <TransitionGroup v-else class="row g-4" name="fade" mode="out-in" tag="div">
               <div
+                data-bs-theme="light"
                 class="col-md-3 p-4"
                 v-for="(bot, index) in filterBots"
                 :key="bot.display_name"
                 :data-index="index"
               >
                 <div class="card border border-dark border-3 rounded" style="min-height: 430px">
-                  <h5 class="card-header bg-secondary bg-opacity-25">{{ bot.display_name }}</h5>
+                  <h6 class="card-header bg-secondary bg-opacity-25 fw-bold">
+                    {{ bot.display_name }}
+                  </h6>
                   <img
                     :src="getLogo(bot.system?.toLocaleLowerCase())"
-                    :alt="`logo ${bot.system?.toLocaleLowerCase()}`"
-                    class="card-img-top p-4 img-thumbnail bg-white"
+                    :alt="`Logo Sistema ${bot.system?.toLowerCase()}`"
+                    :class="getClassImgLogo(bot.system.toLowerCase())"
                   />
                   <div class="card-body bg-secondary bg-opacity-10">
                     <h5 class="card-text">
@@ -91,9 +119,17 @@ function handleBotSelected(botInfo: BotRecord) {
                 </div>
               </div>
             </TransitionGroup>
-          </div>
+          </Transition>
         </div>
       </div>
     </div>
   </div>
 </template>
+<style scoped lang="css">
+.imgBot {
+  min-height: 200px;
+  object-fit: contain;
+  width: 100%;
+  height: 200px;
+}
+</style>

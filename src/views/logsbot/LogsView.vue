@@ -59,7 +59,6 @@ function stopBotExecution() {
           </div>
         </div>
       </div>
-      <div class="card-footer bg-secondary"></div>
     </div>
   </div>
 </template>

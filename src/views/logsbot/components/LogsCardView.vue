@@ -2,7 +2,7 @@
 import { LogsBotSocket } from "@/main";
 import { useStoreLogsBot } from "@/stores/bot/logs";
 import { storeToRefs } from "pinia";
-import { onBeforeMount, onUnmounted, ref, watch } from "vue";
+import { nextTick, onBeforeMount, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import MaterialSymbolsPieChartOutline from "~icons/material-symbols/pie-chart-outline?width=24px&height=24px";
 import setupLogsExec from "./setupLogsExec";
@@ -15,6 +15,8 @@ const { listLogs, totalLogs, status, current_pid, totalSuccess, totalErrors, rem
 const route = useRoute();
 const router = useRouter();
 
+const idLI = ref<string>();
+
 function get_logs(logsData: LogsBotRecord, loadCache: boolean = false) {
   console.log(logsData);
 
@@ -23,7 +25,7 @@ function get_logs(logsData: LogsBotRecord, loadCache: boolean = false) {
   } else if (loadCache) {
     listLogs.value = logsData.messages as unknown as LogsBotRecord[];
   }
-
+  idLI.value = String(logsData.messages.length - 1);
   totalSuccess.value = logsData.success;
   totalErrors.value = logsData.errors;
   totalLogs.value = logsData.total;
@@ -53,8 +55,24 @@ onUnmounted(() => {
 
 const itemLog = ref();
 
-watch(itemLog, (newvalue) => {
-  console.log(newvalue);
+/**
+ * Observa mudanças em idLI e faz scroll suave para o elemento correspondente após a transição.
+ *
+ * @param {Ref<string | undefined>} idLI - Ref que armazena o id do último log.
+ * @returns {void} Não retorna valor.
+ */
+watch(idLI, (newvalue) => {
+  // Aguarda o próximo tick para garantir que o elemento foi renderizado pelo TransitionGroup
+  if (newvalue !== undefined) {
+    nextTick(() => {
+      const el = document.querySelector(`li[id="${String(newvalue)}"]`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "end" });
+      }
+      console.log(newvalue);
+      console.log(el);
+    });
+  }
 });
 </script>
 <template>
@@ -78,7 +96,12 @@ watch(itemLog, (newvalue) => {
         class="overflow-y-auto align-items-start justify-content-start"
       >
         <TransitionGroup tag="ul" name="fade" ref="itemLog">
-          <li v-for="(item, index) in listLogs" :key="index" :class="item.type.toLowerCase()">
+          <li
+            v-for="(item, index) in listLogs"
+            :key="index"
+            :id="String(index)"
+            :class="item.type.toLowerCase()"
+          >
             {{ item.message }}
           </li>
         </TransitionGroup>

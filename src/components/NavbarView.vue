@@ -29,11 +29,10 @@ mainSocket.on("not_logged", () => {
         <span class="nav-link-icon">
           <MaterialSymbolsMenuRounded />
         </span>
-        <span class="text"> Menu </span>
+        <span class="text fs-4"> Menu </span>
       </a>
       <div class="me-auto ms-auto d-flex gap-2">
-        <img :src="logoCrawjud" alt="Logo CrawJUD" height="35" />
-        <span class="fs-4">CrawJUD</span>
+        <img :src="logoCrawjud" alt="Logo CrawJUD" height="45" style="margin-right: 95px" />
       </div>
     </div>
   </nav>
