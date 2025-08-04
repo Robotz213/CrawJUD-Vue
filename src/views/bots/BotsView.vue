@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import logoElaw from "@/assets/img/logoelaw.png";
 import logoEsaj from "@/assets/img/esaj3.png";
 import crawjud from "@/assets/img/figure_crawjud.png";
-import logoPJE from "@/assets/img/pje2.png";
+import logoElaw from "@/assets/img/logoelaw.png";
+import logoPJE1 from "@/assets/img/pje.png";
+import logoPJE2 from "@/assets/img/pje2.png";
 import logoProjudi from "@/assets/img/projudilogo.png";
 import { storeBot } from "@/stores/bot";
 import { storeToRefs } from "pinia";
@@ -18,11 +19,12 @@ const filterBots = computed(() =>
   ),
 );
 
+const current_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 const imagesSrc: { [key: string]: string } = {
   projudi: logoProjudi,
   esaj: logoEsaj,
   elaw: logoElaw,
-  pje: logoPJE,
+  pje: current_theme === "dark" ? logoPJE1 : logoPJE2,
 };
 
 function getLogo(system: string) {
@@ -43,9 +45,18 @@ function handleBotSelected(botInfo: BotRecord) {
 
 const class_logo: { [key: string]: string } = {
   pje: "card-img-top p-4 img-thumbnail imgBot",
-  esaj: "card-img-top p-4 img-thumbnail imgBot bg-secondary",
-  projudi: "card-img-top p-4 img-thumbnail imgBot",
-  elaw: "card-img-top p-4 img-thumbnail imgBot",
+  esaj:
+    current_theme === "dark"
+      ? "card-img-top p-4 img-thumbnail imgBot"
+      : "card-img-top p-4 img-thumbnail imgBot bg-secondary",
+  projudi:
+    current_theme === "dark"
+      ? "card-img-top p-4 img-thumbnail imgBot bg-white"
+      : "card-img-top p-4 img-thumbnail imgBot",
+  elaw:
+    current_theme === "dark"
+      ? "card-img-top p-4 img-thumbnail imgBot bg-white"
+      : "card-img-top p-4 img-thumbnail imgBot",
 };
 
 function getClassImgLogo(system: string) {
@@ -89,7 +100,6 @@ function getClassImgLogo(system: string) {
             </div>
             <TransitionGroup v-else class="row g-4" name="fade" mode="out-in" tag="div">
               <div
-                data-bs-theme="light"
                 class="col-md-3 p-4"
                 v-for="(bot, index) in filterBots"
                 :key="bot.display_name"

@@ -37,24 +37,57 @@ async function uploadFiles(files: File[]) {
   for (let i = 0; i < files.length; i++) {
     setTimeout(async () => {
       const file = files[i];
-      const filename = file.name;
+      await sendFileInChunks(file, 81920); // Envia o arquivo em chunks de 80KB
+      currentPos.value += 1;
+    }, 1500);
+  }
+}
+
+/**
+ * Envia um arquivo grande em chunks via WebSocket.
+ *
+ * @param {File} file - Arquivo a ser enviado.
+ * @param {number} chunkSize - Tamanho de cada chunk em bytes.
+ * @returns {Promise<void>} Resolve quando o envio termina.
+ * @throws {Error} Se ocorrer erro durante o envio.
+ */
+async function sendFileInChunks(file: File, chunkSize: number = 1024): Promise<void> {
+  const totalChunks = Math.ceil(file.size / 1024);
+  for (let i = 0; i < totalChunks; i++) {
+    const start = i * chunkSize;
+    const end = Math.min(file.size, start + chunkSize);
+
+    if (end === file.size) {
+      break;
+    }
+
+    const chunk = file.slice(start, end);
+    const arrayBuffer = await chunk.arrayBuffer();
+    console.log(totalChunks);
+    await new Promise<void>((resolve, reject) => {
       FileSocket.emit(
         "add_file",
         {
-          file: {
-            name: filename,
+          data: {
+            name: file.name,
+            index: i,
+            chunksize: chunkSize,
+            file_size: file.size,
+            total: totalChunks,
+            chunk: arrayBuffer,
             content_type: file.type,
-            file: await file.arrayBuffer(),
-            content_length: file.size,
           },
         },
-        () => {
-          setTimeout(() => {
-            currentPos.value += 1;
-          }, 1500);
+        (err: Error | null) => {
+          if (err) reject(err);
+          else resolve();
         },
       );
-    }, 1500);
+    });
+    // Atualiza a barra de progresso apenas para o arquivo atual
+    progressBar.value = Math.round(
+      ((currentPos.value + (i + 2) / totalChunks) / valorTotal.value) * 100,
+    );
   }
 }
 
