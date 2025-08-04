@@ -57,10 +57,6 @@ async function sendFileInChunks(file: File, chunkSize: number = 1024): Promise<v
     const start = i * chunkSize;
     const end = Math.min(file.size, start + chunkSize);
 
-    if (end === file.size) {
-      break;
-    }
-
     const chunk = file.slice(start, end);
     const arrayBuffer = await chunk.arrayBuffer();
     console.log(totalChunks);
@@ -88,6 +84,9 @@ async function sendFileInChunks(file: File, chunkSize: number = 1024): Promise<v
     progressBar.value = Math.round(
       ((currentPos.value + (i + 2) / totalChunks) / valorTotal.value) * 100,
     );
+    if (end >= file.size) {
+      break;
+    }
   }
 }
 
