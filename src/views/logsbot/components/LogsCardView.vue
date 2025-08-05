@@ -111,27 +111,27 @@ watch(idLI, (newvalue) => {
 
 <style lang="css" scoped>
 .error {
-  color: #892323;
+  color: #bd0707;
   font-weight: bold;
 }
 
 .info {
-  color: #f1cf0b;
+  color: #f1b00bbb;
   font-weight: bold;
 }
 
 .warning {
-  color: #ff8400;
+  color: #af3f07;
   font-weight: bold;
 }
 
 .success {
-  color: #02b102;
+  color: #11ab5b;
   font-weight: bold;
 }
 
 .log {
-  color: #d1d0d0;
+  color: #ffffffa8;
   font-weight: bold;
 }
 </style>
