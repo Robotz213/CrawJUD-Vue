@@ -10,6 +10,9 @@ import vueDevTools from "vite-plugin-vue-devtools";
 // https://vite.dev/config/
 export default defineConfig({
   base: "/",
+  server: {
+    allowedHosts: ["fronttest.robotz.dev"],
+  },
   build: {
     sourcemap: true,
     outDir: "./dist",

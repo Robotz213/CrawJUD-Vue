@@ -12,7 +12,6 @@ const { current_pid, contentRef } = storeToRefs(storeLogs);
 
 function stopBotExecution() {
   LogsBotSocket.emit("stop_signal", { data: { pid: current_pid.value } });
-  console.log("Signal to stop bot execution sent.");
 }
 </script>
 

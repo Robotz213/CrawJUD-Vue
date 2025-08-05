@@ -59,7 +59,6 @@ async function sendFileInChunks(file: File, chunkSize: number = 1024): Promise<v
 
     const chunk = file.slice(start, end);
     const arrayBuffer = await chunk.arrayBuffer();
-    console.log(totalChunks);
     await new Promise<void>((resolve, reject) => {
       FileSocket.emit(
         "add_file",

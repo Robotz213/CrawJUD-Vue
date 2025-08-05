@@ -18,8 +18,6 @@ const router = useRouter();
 const idLI = ref<string>();
 
 function get_logs(logsData: LogsBotRecord, loadCache: boolean = false) {
-  console.log(logsData);
-
   if (!loadCache) {
     listLogs.value.push(logsData);
   } else if (loadCache) {
@@ -69,8 +67,6 @@ watch(idLI, (newvalue) => {
       if (el) {
         el.scrollIntoView({ behavior: "smooth", block: "end" });
       }
-      console.log(newvalue);
-      console.log(el);
     });
   }
 });
