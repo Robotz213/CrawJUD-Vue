@@ -1,19 +1,6 @@
 <script setup lang="ts">
 import logoCrawjud from "@/assets/img/crawjud.png";
-import { useMessageStore } from "@/stores/message";
-import { storeToRefs } from "pinia";
-import { useRouter } from "vue-router";
 import MaterialSymbolsMenuRounded from "~icons/material-symbols/menu-rounded?width=24px&height=24px";
-import { disconnectSocket, mainSocket } from "../main";
-
-const router = useRouter();
-const { message } = storeToRefs(useMessageStore());
-mainSocket.on("not_logged", () => {
-  message.value = "Sessão expirada, realizar novo login!";
-  router.push({ name: "login" });
-
-  disconnectSocket();
-});
 </script>
 
 <template>
