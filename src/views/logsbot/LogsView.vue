@@ -11,7 +11,7 @@ const storeLogs = useStoreLogsBot();
 const { current_pid, contentRef } = storeToRefs(storeLogs);
 
 function stopBotExecution() {
-  LogsBotSocket.emit("stop_signal", { data: { pid: current_pid.value } });
+  LogsBotSocket.emit("stopbot", { data: { pid: current_pid.value } });
 }
 </script>
 
